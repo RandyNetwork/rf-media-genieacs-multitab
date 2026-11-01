@@ -8,7 +8,7 @@
 [![Brand](https://img.shields.io/badge/Brand-RF%20MEDIA-bb002e)](https://wa.me/6281947215703)
 [![License](https://img.shields.io/badge/License-MIT-purple)](#)
 
-![RF Media — GenieACS Multi-Tab](branding/rf-media-header.jpg)
+![RF Media — GenieACS Multi-Tab](branding/rf-media-header.svg)
 
 Modifikasi **RF Media GenieACS Multi-Tab**, fork komunitas berbasis project GenieACS Multi-Tab Mod dari ALIJAYA NET. Tampilan dan fungsi **GenieACS TR-069 ACS Server** yang dirancang khusus untuk mempermudah operasional teknisi dan pengelola jaringan internet (**RT/RW Net / ISP Mandiri**). Mengubah tampilan standar GenieACS yang kosong/polos menjadi **Multi-Tab Informatif Lengkap**, mendukung tombol **"Add WAN"** langsung dari Web UI, pemantauan port fisik LAN, tabel Multi-SSID & sinyal RSSI klien WiFi, serta dilengkapi **script provision universal bebas fault (0 Faults)** untuk berbagai merk ONT/ONU (ZTE, Huawei, Fiberhome, GM220-S, CIOT, dsb).
 
