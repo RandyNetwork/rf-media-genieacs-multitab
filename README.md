@@ -1,6 +1,6 @@
 # 🚀 RF Media GenieACS Multi-Tab (Informatif, Universal Multi-Vendor & 0-Faults)
 
-[![GitHub Repository](https://img.shields.io/badge/GitHub-RandyNetwork%2Frf--media--genieacs--multitab-blue?logo=github) ](https://github.com/RandyNetwork/rf-media-genieacs-multitab)
+[![GitHub Repository](https://img.shields.io/badge/GitHub-RandyNetwork%2Frf--media--genieacs--multitab-blue?logo=github)](https://github.com/RandyNetwork/rf-media-genieacs-multitab)
 [![GenieACS Version](https://img.shields.io/badge/GenieACS-v1.2.13%2B-orange?logo=node.js)](https://genieacs.com/)
 [![Node.js Version](https://img.shields.io/badge/Node.js-v20%20LTS-green?logo=node.js)](https://nodejs.org/)
 [![Database](https://img.shields.io/badge/Database-MongoDB%204.4%2B%20%7C%206.x%20%7C%207.x-brightgreen?logo=mongodb)](https://www.mongodb.com/)
