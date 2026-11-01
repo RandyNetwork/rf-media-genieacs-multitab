@@ -1,6 +1,6 @@
 # 🚀 RF Media GenieACS Multi-Tab (Informatif, Universal Multi-Vendor & 0-Faults)
 
-[![GitHub Repository](https://img.shields.io/badge/GitHub-RandyNetwork%2Frf--media--genieacs--multitab-blue?logo=github) ](https://github.com/RandyNetwork/rf-media-genieacs-multitab)
+[![GitHub Repository](https://img.shields.io/badge/GitHub-RandyNetwork%2Frf--media--genieacs--multitab-blue?logo=github)  ](https://github.com/RandyNetwork/rf-media-genieacs-multitab)
 [![GenieACS Version](https://img.shields.io/badge/GenieACS-v1.2.13%2B-orange?logo=node.js)](https://genieacs.com/)
 [![Node.js Version](https://img.shields.io/badge/Node.js-v20%20LTS-green?logo=node.js)](https://nodejs.org/)
 [![Database](https://img.shields.io/badge/Database-MongoDB%204.4%2B%20%7C%206.x%20%7C%207.x-brightgreen?logo=mongodb)](https://www.mongodb.com/)
@@ -8,13 +8,13 @@
 [![Brand](https://img.shields.io/badge/Brand-RF%20MEDIA-bb002e)](https://wa.me/6281947215703)
 [![License](https://img.shields.io/badge/License-MIT-purple)](#)
 
-Modifikasi **RF Media GenieACS Multi-Tab**, fork komunitas berbasis project GenieACS Multi-Tab Mod dari ALIJAYA NET. Tampilan dan fungsi **GenieACS TR-069 ACS Server** yang dirancang khusus untuk mempermudah operasional teknisi dan pengelola jaringan internet (**RT/RW Net / ISP Mandiri**). Mengubah tampilan standar GenieACS yang kosong/polos menjadi **Multi-Tab Informatif Lengkap**, mendukung tombol **"Add WAN"** langsung dari Web UI, pemantauan port fisik LAN, tabel Multi-SSID & sinyal RSSI klien WiFi, serta dilengkapi **script provision universal bebas fault (0 Faults)** untuk berbagai merk ONT/ONU (ZTE, Huawei, Fiberhome, GM220-S, CIOT, dsb).
+![RF Media](branding/rf-media-header.svg)\n\nModifikasi **RF Media GenieACS Multi-Tab**, fork komunitas berbasis project GenieACS Multi-Tab Mod dari ALIJAYA NET. Tampilan dan fungsi **GenieACS TR-069 ACS Server** yang dirancang khusus untuk mempermudah operasional teknisi dan pengelola jaringan internet (**RT/RW Net / ISP Mandiri**). Mengubah tampilan standar GenieACS yang kosong/polos menjadi **Multi-Tab Informatif Lengkap**, mendukung tombol **"Add WAN"** langsung dari Web UI, pemantauan port fisik LAN, tabel Multi-SSID & sinyal RSSI klien WiFi, serta dilengkapi **script provision universal bebas fault (0 Faults)** untuk berbagai merk ONT/ONU (ZTE, Huawei, Fiberhome, GM220-S, CIOT, dsb).
 
 ---
 
 ## 📞 Informasi Pengembang & Layanan Support
 
-Project ini dikembangkan, dioptimasi, dan dipelihara secara resmi oleh **ALIJAYA NET**:
+Fork ini diberi identitas dan dipelihara oleh **RF MEDIA**. Kode dasar dan pengembangan upstream berasal dari **ALIJAYA NET**:
 * **Brand / Maintainer Fork** : **RF MEDIA**  
 *Project upstream dan pengembang asli: ALIJAYA NET.*
 * **WhatsApp / Telepon** : [**081947215703**](https://wa.me/6281947215703) (`+62 819-4721-5703`)
@@ -99,7 +99,7 @@ Gunakan metode ini jika Anda baru saja menginstall sistem operasi Linux (Armbian
    ```bash
    cd /root
    git clone https://github.com/RandyNetwork/rf-media-genieacs-multitab.git
-   cd genieacs-multitab-mod
+   cd rf-media-genieacs-multitab
    ```
 
 3. **Jalankan Script Auto-Installer**:
@@ -267,7 +267,7 @@ Jika Anda menemukan bug, memiliki saran parameter baru, atau membutuhkan bantuan
 * **Maintainer fork** : **RF MEDIA**  
 *Pengembang asli project upstream: ALIJAYA NET.*
 * **WhatsApp** : [**081947215703**](https://wa.me/6281947215703) (`0819-4721-5703`)
-* **Issues / Feedback** : Silakan buat tiket melalui tab [Issues di GitHub ](https://github.com/RandyNetwork/rf-media-genieacs-multitab/issues).
+* **Issues / Feedback** : Silakan buat tiket melalui tab [Issues di GitHub](https://github.com/RandyNetwork/rf-media-genieacs-multitab/issues).
 
 ---
 
