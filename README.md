@@ -1,6 +1,6 @@
 # 🚀 RF Media GenieACS Multi-Tab (Informatif, Universal Multi-Vendor & 0-Faults)
 
-[![GitHub Repository](https://img.shields.io/badge/GitHub-RandyNetwork%2Frf--media--genieacs--multitab-blue?logo=github)  ](https://github.com/RandyNetwork/rf-media-genieacs-multitab)
+[![GitHub Repository](https://img.shields.io/badge/GitHub-RandyNetwork%2Frf--media--genieacs--multitab-blue?logo=github) ](https://github.com/RandyNetwork/rf-media-genieacs-multitab)
 [![GenieACS Version](https://img.shields.io/badge/GenieACS-v1.2.13%2B-orange?logo=node.js)](https://genieacs.com/)
 [![Node.js Version](https://img.shields.io/badge/Node.js-v20%20LTS-green?logo=node.js)](https://nodejs.org/)
 [![Database](https://img.shields.io/badge/Database-MongoDB%204.4%2B%20%7C%206.x%20%7C%207.x-brightgreen?logo=mongodb)](https://www.mongodb.com/)
@@ -8,7 +8,7 @@
 [![Brand](https://img.shields.io/badge/Brand-RF%20MEDIA-bb002e)](https://wa.me/6281947215703)
 [![License](https://img.shields.io/badge/License-MIT-purple)](#)
 
-![RF Media](branding/rf-media-header.svg)\n\nModifikasi **RF Media GenieACS Multi-Tab**, fork komunitas berbasis project GenieACS Multi-Tab Mod dari ALIJAYA NET. Tampilan dan fungsi **GenieACS TR-069 ACS Server** yang dirancang khusus untuk mempermudah operasional teknisi dan pengelola jaringan internet (**RT/RW Net / ISP Mandiri**). Mengubah tampilan standar GenieACS yang kosong/polos menjadi **Multi-Tab Informatif Lengkap**, mendukung tombol **"Add WAN"** langsung dari Web UI, pemantauan port fisik LAN, tabel Multi-SSID & sinyal RSSI klien WiFi, serta dilengkapi **script provision universal bebas fault (0 Faults)** untuk berbagai merk ONT/ONU (ZTE, Huawei, Fiberhome, GM220-S, CIOT, dsb).
+Modifikasi **RF Media GenieACS Multi-Tab**, fork komunitas berbasis project GenieACS Multi-Tab Mod dari ALIJAYA NET. Tampilan dan fungsi **GenieACS TR-069 ACS Server** yang dirancang khusus untuk mempermudah operasional teknisi dan pengelola jaringan internet (**RT/RW Net / ISP Mandiri**). Mengubah tampilan standar GenieACS yang kosong/polos menjadi **Multi-Tab Informatif Lengkap**, mendukung tombol **"Add WAN"** langsung dari Web UI, pemantauan port fisik LAN, tabel Multi-SSID & sinyal RSSI klien WiFi, serta dilengkapi **script provision universal bebas fault (0 Faults)** untuk berbagai merk ONT/ONU (ZTE, Huawei, Fiberhome, GM220-S, CIOT, dsb).
 
 ---
 
