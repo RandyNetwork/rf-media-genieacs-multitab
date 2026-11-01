@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1480" height="258" viewBox="0 0 1480 258" role="img" aria-labelledby="title desc">
+<title id="title">RF Media</title><desc id="desc">RF Media brand header with black and red RF signal mark and RF MEDIA lettering.</desc>
+<rect width="1480" height="258" fill="#f7fbfd"/>
+<g transform="translate(42 14)">
+  <path d="M32 45 C83 18 148 30 178 78 C208 126 191 184 151 220" fill="none" stroke="#c40032" stroke-width="18" stroke-linecap="round"/>
+  <path d="M50 75 C86 54 132 62 153 95 C174 128 165 166 137 192" fill="none" stroke="#c40032" stroke-width="17" stroke-linecap="round"/>
+  <path d="M35 218 V126 C35 91 62 66 96 66" fill="none" stroke="#111111" stroke-width="18" stroke-linecap="round"/>
+  <path d="M75 218 V132 C75 105 95 87 119 87 C145 87 162 109 157 133 C154 147 144 157 132 164 L173 218" fill="none" stroke="#111111" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M95 67 L157 160" stroke="#c40032" stroke-width="17" stroke-linecap="round"/>
+</g>
+<path d="M250 35 V223" stroke="#9aa7b5" stroke-width="2"/>
+<text x="290" y="158" font-family="Arial, Helvetica, sans-serif" font-size="90" font-weight="800" letter-spacing="-2" fill="#111111">RF</text>
+<text x="410" y="158" font-family="Arial, Helvetica, sans-serif" font-size="90" font-weight="800" letter-spacing="-2" fill="#c40032">MEDIA</text>
+</svg>
