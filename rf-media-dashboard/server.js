@@ -79,8 +79,8 @@ const server = http.createServer(async (req, res) => {
       filtered.sort((a,b) => Date.parse(b.lastInform || 0) - Date.parse(a.lastInform || 0));
       return send(res, 200, { total: filtered.length, devices: filtered.slice(0, limit) });
     }
-    if (u.pathname === '/' || u.pathname === '/index.html' || u.pathname === '/app.js' || u.pathname === '/style.css') {
-      const file = path.join(PUBLIC_DIR, u.pathname === '/' ? 'index.html' : path.basename(u.pathname));
+    if (u.pathname === '/' || u.pathname === '/index.html' || u.pathname === '/app.js' || u.pathname === '/style.css' || u.pathname === '/brandingrf-media-header.png') {
+      const file = u.pathname === '/brandingrf-media-header.png' ? path.resolve(PUBLIC_DIR, '..', 'brandingrf-media-header.png') : path.join(PUBLIC_DIR, u.pathname === '/' ? 'index.html' : path.basename(u.pathname));
       if (!file.startsWith(PUBLIC_DIR + path.sep) || !fs.existsSync(file)) return send(res, 404, { error: 'Not found' });
       const ext = path.extname(file);
       const type = ext === '.js' ? 'text/javascript; charset=utf-8' : ext === '.css' ? 'text/css; charset=utf-8' : 'text/html; charset=utf-8';
