@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # ==============================================================================
 # ALIJAYA NET - GenieACS AI Telegram Agent (Full Multi-Tab & Operations Mod)
-# Pengembang: ALIJAYA NET (WhatsApp: 081947215703)
+# Upstream developer: ALIJAYA NET | RF MEDIA support: 082210383000
 # ==============================================================================
 
 import os
