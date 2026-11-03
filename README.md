@@ -268,7 +268,7 @@ Ikuti panduan interaktif di layar untuk mengisi Token Telegram, Chat ID, Nomor A
 Jika Anda menemukan bug, memiliki saran parameter baru, atau membutuhkan bantuan instalasi dan integrasi jaringan:
 * **Maintainer fork** : **RF MEDIA**  
 *Pengembang asli project upstream: ALIJAYA NET.*
-* **WhatsApp** : [**082210383000**](https://wa.me/6282210383000) (`0819-4721-5703`)
+* **WhatsApp** : [**082210383000**](https://wa.me/6282210383000) (`+62 822-1038-3000`)
 * **Issues / Feedback** : Silakan buat tiket melalui tab [Issues di GitHub](https://github.com/RandyNetwork/rf-media-genieacs-multitab/issues).
 
 ---
