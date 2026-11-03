@@ -5,7 +5,7 @@
 [![Node.js Version](https://img.shields.io/badge/Node.js-v20%20LTS-green?logo=node.js)](https://nodejs.org/)
 [![Database](https://img.shields.io/badge/Database-MongoDB%204.4%2B%20%7C%206.x%20%7C%207.x-brightgreen?logo=mongodb)](https://www.mongodb.com/)
 [![Platform](https://img.shields.io/badge/Platform-Armbian%20%7C%20Linux%20SBC%20%7C%20Ubuntu%20%7C%20Debian-yellow?logo=linux)](https://www.armbian.com/)
-[![Brand](https://img.shields.io/badge/Brand-RF%20MEDIA-bb002e)](https://wa.me/6281947215703)
+[![Brand](https://img.shields.io/badge/Brand-RF%20MEDIA-bb002e)](https://wa.me/6282210383000)
 [![License](https://img.shields.io/badge/License-MIT-purple)](#)
 
 ![RF Media — GenieACS Multi-Tab](brandingrf-media-header.png)
@@ -19,7 +19,7 @@ Modifikasi **RF Media GenieACS Multi-Tab**, fork komunitas berbasis project Geni
 Fork ini diberi identitas dan dipelihara oleh **RF MEDIA**. Kode dasar dan pengembangan upstream berasal dari **ALIJAYA NET**:
 * **Brand / Maintainer Fork** : **RF MEDIA**  
 *Project upstream dan pengembang asli: ALIJAYA NET.*
-* **WhatsApp / Telepon** : [**081947215703**](https://wa.me/6281947215703) (`+62 819-4721-5703`)
+* **WhatsApp / Telepon** : [**082210383000**](https://wa.me/6282210383000) (`+62 822-1038-3000`)
 * **Repository Resmi** : [https://github.com/alijayanet/genieacs-multitab-mod](https://github.com/alijayanet/genieacs-multitab-mod)
 * **Kebutuhan** : Tanya jawab teknis, panduan instalasi di STB Armbian (B860H, HG680P, dsb), integrasi billing, penyesuaian parameter khusus, dan konsultasi jaringan RT/RW Net.
 
@@ -154,7 +154,7 @@ Repositori ini kini dilengkapi modul **Dual Bot AI Agent (Telegram & WhatsApp Ba
    * Menangani sistem WhatsApp Multi-Device yang kerap mengirim pesan dengan akhiran `@lid` alih-alih `@s.whatsapp.net`.
    * Otomatis memetakan `@lid` ke nomor asli dan nama pelanggan secara real-time.
 4. **Layanan Mandiri Pelanggan (Customer Self-Service via Tags GenieACS)**:
-   * **Integrasi Tag Nomor WA di GenieACS**: Admin cukup menambahkan tag nomor WhatsApp pelanggan di Web UI GenieACS (misal: `081947215703` atau `wa:081947215703`), atau via chat bot: `tag <username_pppoe> <nomor_wa>`.
+   * **Integrasi Tag Nomor WA di GenieACS**: Admin cukup menambahkan tag nomor WhatsApp pelanggan di Web UI GenieACS (misal: `082210383000` atau `wa:082210383000`), atau via chat bot: `tag <username_pppoe> <nomor_wa>`.
    * **Pendaftaran Mandiri Otomatis**: Pelanggan juga dapat mendaftar sendiri dari WhatsApp dengan mengetik: `daftar <id_pppoe>`. Sistem otomatis menempelkan tag nomor HP pelanggan ke database modem di GenieACS.
    * **Fitur Mandiri Pelanggan (24 Jam Non-Stop)**:
      * `cek` ➔ Melihat status internet, nama WiFi (SSID), sandi saat ini, kualitas sinyal RX, dan perangkat terkoneksi.
@@ -268,7 +268,7 @@ Ikuti panduan interaktif di layar untuk mengisi Token Telegram, Chat ID, Nomor A
 Jika Anda menemukan bug, memiliki saran parameter baru, atau membutuhkan bantuan instalasi dan integrasi jaringan:
 * **Maintainer fork** : **RF MEDIA**  
 *Pengembang asli project upstream: ALIJAYA NET.*
-* **WhatsApp** : [**081947215703**](https://wa.me/6281947215703) (`0819-4721-5703`)
+* **WhatsApp** : [**082210383000**](https://wa.me/6282210383000) (`0819-4721-5703`)
 * **Issues / Feedback** : Silakan buat tiket melalui tab [Issues di GitHub](https://github.com/RandyNetwork/rf-media-genieacs-multitab/issues).
 
 ---
