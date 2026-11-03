@@ -1,0 +1,10 @@
+{
+  "brand_name": "RF MEDIA",
+  "support_whatsapp_display": "082210383000",
+  "support_whatsapp_e164": "6282210383000",
+  "support_whatsapp_url": "https://wa.me/6282210383000",
+  "repository": "https://github.com/RandyNetwork/rf-media-genieacs-multitab",
+  "upstream_repository": "https://github.com/alijayanet/genieacs-multitab-mod",
+  "update_policy": "rf-media-staging-review-pr",
+  "donation_page_enabled": false
+}
