@@ -248,6 +248,13 @@ Ikuti panduan interaktif di layar untuk mengisi Token Telegram, Chat ID, Nomor A
 ## 📁 Struktur File Repository
 
 ```text
+├── branding/config.json          # Identitas resmi RF MEDIA dan kebijakan branding
+├── UPSTREAM_UPDATE.md            # Prosedur sinkronisasi upstream yang aman
+```
+
+Konfigurasi identitas terpusat berada di `branding/config.json`. Setiap perubahan upstream wajib mempertahankan nilai brand, kontak, repository resmi, dan status halaman donasi di file tersebut.
+
+```text
 ├── README.md                     # Dokumentasi resmi & panduan lengkap
 ├── install-genieacs-armbian.sh   # Script auto-installer GenieACS + MongoDB + Agent untuk server baru
 ├── apply-template.sh             # Script pengubah tema & multi-tab untuk server yang sudah aktif
