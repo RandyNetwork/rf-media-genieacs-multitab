@@ -20,7 +20,8 @@ Fork ini diberi identitas dan dipelihara oleh **RF MEDIA**. Kode dasar dan penge
 * **Brand / Maintainer Fork** : **RF MEDIA**  
 *Project upstream dan pengembang asli: ALIJAYA NET.*
 * **WhatsApp / Telepon** : [**082210383000**](https://wa.me/6282210383000) (`+62 822-1038-3000`)
-* **Repository Resmi** : [https://github.com/alijayanet/genieacs-multitab-mod](https://github.com/alijayanet/genieacs-multitab-mod)
+* **Repository RF MEDIA (instalasi & update resmi)** : [RandyNetwork/rf-media-genieacs-multitab](https://github.com/RandyNetwork/rf-media-genieacs-multitab)  
+* **Upstream (sumber kode asli)** : [alijayanet/genieacs-multitab-mod](https://github.com/alijayanet/genieacs-multitab-mod) — hanya sumber pembaruan fitur, bukan sumber instalasi langsung.
 * **Kebutuhan** : Tanya jawab teknis, panduan instalasi di STB Armbian (B860H, HG680P, dsb), integrasi billing, penyesuaian parameter khusus, dan konsultasi jaringan RT/RW Net.
 
 ---
@@ -124,8 +125,8 @@ Gunakan metode ini jika server Anda **sudah memiliki GenieACS aktif dan sudah ad
 1. **Unduh Paket Template & Script Penerap**:
    ```bash
    cd /root
-   git clone https://github.com/alijayanet/genieacs-multitab-mod.git
-   cd genieacs-multitab-mod
+   git clone https://github.com/RandyNetwork/rf-media-genieacs-multitab.git
+   cd rf-media-genieacs-multitab
    ```
 
 2. **Jalankan Script Penerap**:
@@ -256,7 +257,7 @@ Ikuti panduan interaktif di layar untuk mengisi Token Telegram, Chat ID, Nomor A
 │   ├── package.json              # Dependensi @whiskeysockets/baileys@7.0.0-rc11, pino, qrcode
 │   ├── waLidStore.mjs            # Penyimpanan pemetaan LID Multi-Device WhatsApp
 │   └── whatsapp-bot.mjs          # Socket engine Baileys, auto-reconnect, QR generator, gateway HTTP 7559
-├── genieacs_ui_mod.tar.gz        # Bundle frontend Multi-Tab ALIJAYA NET (app.js, css, logo, binary modifikasi)
+├── genieacs_ui_mod.tar.gz        # Bundle frontend Multi-Tab versi RF MEDIA
 ├── genieacs_template_ui.tar.gz   # Arsip template UI (~17 KB) tanpa data perangkat
 └── genieacs_db.tar.gz            # Backup database template (~21 KB) siap pakai tanpa data ONT asing
 ```
@@ -270,6 +271,8 @@ Jika Anda menemukan bug, memiliki saran parameter baru, atau membutuhkan bantuan
 *Pengembang asli project upstream: ALIJAYA NET.*
 * **WhatsApp** : [**082210383000**](https://wa.me/6282210383000) (`+62 822-1038-3000`)
 * **Issues / Feedback** : Silakan buat tiket melalui tab [Issues di GitHub](https://github.com/RandyNetwork/rf-media-genieacs-multitab/issues).
+
+> **Kebijakan update:** gunakan branch `main` repository RF MEDIA untuk instalasi dan update. Jangan menjalankan `git pull` dari repository upstream AliJaya Net pada folder instalasi RF MEDIA. Pembaruan upstream harus melalui proses staging, audit konflik, penerapan branding RF MEDIA, pengujian, lalu Pull Request ke `main`. Detailnya ada di [UPSTREAM_UPDATE.md](UPSTREAM_UPDATE.md).
 
 ---
 
