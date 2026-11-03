@@ -3479,7 +3479,7 @@ HTML_CONFIG_PAGE = """<!DOCTYPE html>
 
         <div class="form-group">
           <label>Nomor WhatsApp Admin / Teknisi:</label>
-          <textarea id="wa_admin_numbers" name="wa_admin_numbers" placeholder="Contoh: 081947215703, 081234567890"></textarea>
+          <textarea id="wa_admin_numbers" name="wa_admin_numbers" placeholder="Contoh: 082210383000, 081234567890"></textarea>
           <div class="hint">Nomor yang memiliki hak akses perintah administratif (cek, redaman, reboot, wifion/off, ssid, dll). Pisahkan koma jika lebih dari satu.</div>
         </div>
 
@@ -3945,7 +3945,7 @@ HTML_CONFIG_PAGE = """<!DOCTYPE html>
       this.disabled = true;
 
       const targetId = adminId.split(',')[0].trim();
-      const testMsg = '🔔 *TES NOTIFIKASI GENIEACS BOT RF MEDIA*' + String.fromCharCode(10) + String.fromCharCode(10) + 'Koneksi bot Telegram ALIJAYA NET berhasil terhubung dengan server!';
+      const testMsg = '🔔 *TES NOTIFIKASI GENIEACS BOT RF MEDIA*' + String.fromCharCode(10) + String.fromCharCode(10) + 'Koneksi bot Telegram RF MEDIA berhasil terhubung dengan server!';
       const tgUrl = 'https://api.telegram.org/bot' + token + '/sendMessage?chat_id=' + targetId + '&text=' + encodeURIComponent(testMsg) + '&parse_mode=Markdown';
 
       fetch(tgUrl)
@@ -5703,7 +5703,7 @@ def start_web_server(port=7558):
         logger.error(f"Gagal menjalankan Bot Web Config server di port {port}: {e}")
 
 def main():
-    logger.info("Starting ALIJAYA NET GenieACS AI Agent Service...")
+    logger.info("Starting RF MEDIA GenieACS AI Agent Service...")
     web_thread = threading.Thread(target=start_web_server, args=(7558,), daemon=True)
     web_thread.start()
     last_update_id = 0
