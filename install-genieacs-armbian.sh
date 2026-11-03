@@ -657,5 +657,5 @@ echo -e "${CYAN}║${NC}  🛡️ ${BOLD}Proteksi Storage${NC}     : ${GREEN}Log
 echo -e "${CYAN}╠══════════════════════════════════════════════════════════════════════╣${NC}"
 echo -e "${CYAN}║${NC}  👑 ${BOLD}RF MEDIA SUPPORT${NC}  : ${GREEN}${BOLD}RF MEDIA${NC}"
 echo -e "${CYAN}║${NC}  📱 ${BOLD}WHATSAPP / TELEPON${NC}   : ${YELLOW}${BOLD}082210383000${NC} (${CYAN}0822-1038-3000${NC})"
-echo -e "${CYAN}║${NC}  💬 ${BOLD}HUBUNGI KAMI (WA)${NC}    : ${CYAN}https://wa.me/6281947215703${NC}"
+echo -e "${CYAN}║${NC}  💬 ${BOLD}HUBUNGI KAMI (WA)${NC}    : ${CYAN}https://wa.me/6282210383000${NC}"
 echo -e "${CYAN}╚══════════════════════════════════════════════════════════════════════╝${NC}\n"
