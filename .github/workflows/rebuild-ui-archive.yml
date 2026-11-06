@@ -24,7 +24,7 @@ jobs:
       - name: Rebuild archive with RF MEDIA branding
         run: |
           python3 - <<'PY'
-          import io, os, re, tarfile
+          import io, json, os, re, tarfile
           archive = "genieacs_ui_mod.tar.gz"
           if not os.path.isfile(archive):
               raise SystemExit(f"Missing source archive: {archive}")
@@ -41,12 +41,19 @@ jobs:
                       continue
                   original = source.extractfile(member).read()
                   data = original
-                  if member.name.startswith("genieacs/public/") and member.name.endswith(".css"):
-                      marker = b"/* RF MEDIA modern light UI — presentation layer only."
+                  if member.name == "genieacs/public/app.js":
+                      marker = b"RF MEDIA modern light UI"
                       if marker not in data:
-                          data = data.rstrip() + b"\n\n" + theme_css
-                      changed.add(member.name)
-                  elif member.name == "genieacs/public/app.js":
+                          css_text = theme_css.decode("utf-8")
+                          css_json = json.dumps(css_text)
+                          bootstrap = (
+                              "(function(){var s=document.createElement('style');"
+                              "s.id='rf-media-modern-light';"
+                              "s.textContent=" + css_json + ";"
+                              "(document.head||document.documentElement).appendChild(s);"
+                              "})();\\n"
+                          ).encode("utf-8")
+                          data = bootstrap + data
                       text = data.decode("utf-8")
                       replacements = [
                           ('n.push((0,je.default)("li",{class:t.donasi},(0,je.default)("a",{href:"#!/donasi"},"💖 Donasi"))),', ''),
@@ -99,7 +106,6 @@ jobs:
               assert not (removed & names), "Donation assets still present"
               for name in ("genieacs/public/app.js", "genieacs/public/peta.html", "genieacs/public/voice.html", "genieacs/public/logo.svg"):
                   assert name in names, f"Missing required asset: {name}"
-              assert any(n.startswith("genieacs/public/") and n.endswith(".css") for n in names), "No public CSS asset found in archive"
               app = check.extractfile("genieacs/public/app.js").read().decode("utf-8")
               assert not re.search(r"donasi|qris", app, re.I), "Donation route/menu still present"
           print("Archive rebuilt. Updated:", sorted(changed))
