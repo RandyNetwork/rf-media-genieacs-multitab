@@ -6,6 +6,7 @@ on:
       - rf-media-branding-20261103
     paths:
       - .github/workflows/rebuild-ui-archive.yml
+      - rf-media-ui/modern-theme.css
 
 permissions:
   contents: write
@@ -30,6 +31,7 @@ jobs:
           temp = archive + ".tmp"
           removed = {"genieacs/public/donasi.html", "genieacs/public/qris.jpg"}
           changed = set()
+          theme_css = open("rf-media-ui/modern-theme.css", "rb").read()
           with tarfile.open(archive, "r:gz") as source, tarfile.open(temp, "w:gz", compresslevel=9) as target:
               for member in source.getmembers():
                   if member.name in removed:
@@ -39,7 +41,12 @@ jobs:
                       continue
                   original = source.extractfile(member).read()
                   data = original
-                  if member.name == "genieacs/public/app.js":
+                  if member.name == "genieacs/public/app.css":
+                      marker = b"/* RF MEDIA modern light UI — presentation layer only."
+                      if marker not in data:
+                          data = data.rstrip() + b"\\n\\n" + theme_css
+                      changed.add(member.name)
+                  elif member.name == "genieacs/public/app.js":
                       text = data.decode("utf-8")
                       replacements = [
                           ('n.push((0,je.default)("li",{class:t.donasi},(0,je.default)("a",{href:"#!/donasi"},"💖 Donasi"))),', ''),
@@ -90,7 +97,7 @@ jobs:
           with tarfile.open(archive, "r:gz") as check:
               names = set(check.getnames())
               assert not (removed & names), "Donation assets still present"
-              for name in ("genieacs/public/app.js", "genieacs/public/peta.html", "genieacs/public/voice.html", "genieacs/public/logo.svg"):
+              for name in ("genieacs/public/app.js", "genieacs/public/app.css", "genieacs/public/peta.html", "genieacs/public/voice.html", "genieacs/public/logo.svg"):
                   assert name in names, f"Missing required asset: {name}"
               app = check.extractfile("genieacs/public/app.js").read().decode("utf-8")
               assert not re.search(r"donasi|qris", app, re.I), "Donation route/menu still present"
