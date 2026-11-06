@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # ==============================================================================
-# ALIJAYA NET - Setup Bot Telegram, WhatsApp & AI GenieACS
-# Pengembang: ALIJAYA NET (WhatsApp: 081947215703)
+# RF MEDIA - Setup Bot Telegram, WhatsApp & AI GenieACS
+# Branding RF MEDIA | Upstream: ALIJAYA NET
 # ==============================================================================
 
 import os
@@ -132,8 +132,8 @@ def main():
         sys.exit(0)
 
     print("\n" + "═" * 68)
-    print("   🤖 ALIJAYA NET - PENGATURAN BOT TELEGRAM, WHATSAPP & AI GENIEACS")
-    print("   Kontak / WA: 081947215703")
+    print("   🤖 RF MEDIA - PENGATURAN BOT TELEGRAM, WHATSAPP & AI GENIEACS")
+    print("   Kontak / WA: 082210383000")
     print("═" * 68)
 
     db = get_db()
@@ -145,9 +145,9 @@ def main():
     curr_token = ""
     curr_chat = ""
     curr_gemini = ""
-    curr_brand = "ALIJAYA NET"
-    curr_phone = "081947215703"
-    curr_wa_admin = "081947215703"
+    curr_brand = "RF MEDIA"
+    curr_phone = "082210383000"
+    curr_wa_admin = "082210383000"
 
     doc_token = db.config.find_one({"_id": "agent.telegram.botToken"})
     if doc_token: curr_token = clean_val(doc_token.get("value"))

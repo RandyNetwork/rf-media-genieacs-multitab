@@ -4,7 +4,7 @@
 # Dikhususkan untuk Armbian / Linux SBC (STB B860H, HG680P, Orange Pi, Raspberry Pi)
 # Serta Komputer / VPS Linux Debian 11 (Bullseye) / Debian 12 (Bookworm) / Ubuntu
 # 
-# Dibuat & Dioptimasi oleh: ALIJAYA-NET (HP: 081947215703)
+# Branding & modifikasi RF MEDIA | Upstream: ALIJAYA NET
 # ==============================================================================
 
 set -e
@@ -20,11 +20,11 @@ NC='\033[0m' # No Color
 
 clear 2>/dev/null || true
 echo -e "${CYAN}╔══════════════════════════════════════════════════════════════════════╗${NC}"
-echo -e "${CYAN}║${BOLD}${GREEN}                    🚀 ALIJAYA NET AUTO-INSTALLER                     ${NC}${CYAN}║${NC}"
+echo -e "${CYAN}║${BOLD}${GREEN}                    🚀 RF MEDIA AUTO-INSTALLER                     ${NC}${CYAN}║${NC}"
 echo -e "${CYAN}║${BOLD}${YELLOW}         GENIEACS TR-069 + MONGODB + NODE.JS v20 UNTUK ARMBIAN        ${NC}${CYAN}║${NC}"
 echo -e "${CYAN}║                                                                      ║${NC}"
-echo -e "${CYAN}║${NC}  👑 ${BOLD}Pengembang & Maintenance${NC} : ${GREEN}${BOLD}ALIJAYA NET${NC}                           ${CYAN}║${NC}"
-echo -e "${CYAN}║${NC}  📱 ${BOLD}WhatsApp / Telepon${NC}       : ${YELLOW}${BOLD}081947215703${NC} (${CYAN}0819-4721-5703${NC})         ${CYAN}║${NC}"
+echo -e "${CYAN}║${NC}  👑 ${BOLD}Brand / Maintenance${NC}    : ${GREEN}${BOLD}RF MEDIA${NC}                           ${CYAN}║${NC}"
+echo -e "${CYAN}║${NC}  📱 ${BOLD}WhatsApp / Telepon${NC}       : ${YELLOW}${BOLD}082210383000${NC} (${CYAN}0822-1038-3000${NC})         ${CYAN}║${NC}"
 echo -e "${CYAN}║${NC}  🌐 ${BOLD}Sistem & Jaringan${NC}        : ${WHITE}Manajemen TR-069 GenieACS & RT/RW Net   ${CYAN}║${NC}"
 echo -e "${CYAN}╚══════════════════════════════════════════════════════════════════════╝${NC}"
 echo ""
@@ -274,7 +274,7 @@ systemctl start mongod
 echo -e "${GREEN}[OK] MongoDB berhasil aktif!${NC}"
 
 # ==============================================================================
-# RESTORE DATABASE SIAP PAKAI (ALIJAYA NET)
+# RESTORE DATABASE SIAP PAKAI (RF MEDIA)
 # Merestore Virtual Parameters Universal, Presets, Provisions & UI Config
 # ==============================================================================
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" 2>/dev/null && pwd || pwd)"
@@ -291,7 +291,7 @@ fi
 
 if [ -n "$BACKUP_ARCHIVE" ] && [ -f "$BACKUP_ARCHIVE" ]; then
   echo -e "\n${BLUE}[+] Ditemukan file backup database: ${YELLOW}${BACKUP_ARCHIVE}${NC}"
-  echo -e "${YELLOW}Merestore database GenieACS (Virtual Parameters universal, Preset & Config ALIJAYA NET)...${NC}"
+  echo -e "${YELLOW}Merestore database GenieACS (Virtual Parameters universal, Preset & Config RF MEDIA)...${NC}"
   
   if ! command -v mongorestore >/dev/null 2>&1; then
     echo -e "${YELLOW}[!] Memasang paket mongo-tools (mongorestore)...${NC}"
@@ -398,7 +398,7 @@ echo -e "\n${BLUE}[4/7] Menginstall GenieACS secara global via NPM...${NC}"
 npm install -g genieacs@1.2.13 --unsafe-perm=true --prefix /usr 2>/dev/null || \
 npm install -g genieacs@1.2.13 --unsafe-perm=true
 
-# Terapkan UI Frontend Multi-Tab & Modifikasi Binaries (ALIJAYA NET)
+# Terapkan UI Frontend Multi-Tab & Modifikasi Binaries (RF MEDIA)
 MOD_ARCHIVE=""
 if [ -f "${SCRIPT_DIR}/genieacs_ui_mod.tar.gz" ]; then
   MOD_ARCHIVE="${SCRIPT_DIR}/genieacs_ui_mod.tar.gz"
@@ -409,7 +409,7 @@ elif [ -f "/root/genieacs-multitab-mod/genieacs_ui_mod.tar.gz" ]; then
 fi
 
 if [ -n "$MOD_ARCHIVE" ] && [ -f "$MOD_ARCHIVE" ]; then
-  echo -e "${YELLOW}Menerapkan tema & modul tampilan Multi-Tab (ALIJAYA NET)...${NC}"
+  echo -e "${YELLOW}Menerapkan tema & modul tampilan Multi-Tab (RF MEDIA)...${NC}"
   GENIE_DIR=""
   if [ -d "/usr/lib/node_modules/genieacs" ]; then
     GENIE_DIR="/usr/lib/node_modules/genieacs"
@@ -595,7 +595,7 @@ fi
 
 cat << 'EOF' > /etc/systemd/system/genieacs-agent.service
 [Unit]
-Description=GenieACS AI Telegram Agent (ALIJAYA NET)
+Description=GenieACS AI Telegram Agent (RF MEDIA)
 After=network.target mongod.service genieacs-nbi.service
 
 [Service]
@@ -615,7 +615,7 @@ EOF
 
 cat << 'EOF' > /etc/systemd/system/genieacs-whatsapp.service
 [Unit]
-Description=GenieACS WhatsApp AI Agent (Baileys Gateway - ALIJAYA NET)
+Description=GenieACS WhatsApp AI Agent (Baileys Gateway - RF MEDIA)
 After=network.target mongod.service genieacs-nbi.service genieacs-agent.service
 
 [Service]
@@ -655,7 +655,7 @@ echo -e "${CYAN}║${NC}  ⚙️ ${BOLD}Web Pengaturan Bot${NC}   : ${YELLOW}${B
 echo -e "${CYAN}║${NC}  ⚡ ${BOLD}Status Layanan${NC}       : ${GREEN}GenieACS, MongoDB, Telegram & WA AKTIF (OK)${NC}"
 echo -e "${CYAN}║${NC}  🛡️ ${BOLD}Proteksi Storage${NC}     : ${GREEN}Logrotate & Ramlog AKTIF (Bebas Disk Penuh)${NC}"
 echo -e "${CYAN}╠══════════════════════════════════════════════════════════════════════╣${NC}"
-echo -e "${CYAN}║${NC}  👑 ${BOLD}DEVELOPER & SUPPORT${NC}  : ${GREEN}${BOLD}ALIJAYA NET${NC}"
-echo -e "${CYAN}║${NC}  📱 ${BOLD}WHATSAPP / TELEPON${NC}   : ${YELLOW}${BOLD}081947215703${NC} (${CYAN}0819-4721-5703${NC})"
-echo -e "${CYAN}║${NC}  💬 ${BOLD}HUBUNGI KAMI (WA)${NC}    : ${CYAN}https://wa.me/6281947215703${NC}"
+echo -e "${CYAN}║${NC}  👑 ${BOLD}RF MEDIA SUPPORT${NC}  : ${GREEN}${BOLD}RF MEDIA${NC}"
+echo -e "${CYAN}║${NC}  📱 ${BOLD}WHATSAPP / TELEPON${NC}   : ${YELLOW}${BOLD}082210383000${NC} (${CYAN}0822-1038-3000${NC})"
+echo -e "${CYAN}║${NC}  💬 ${BOLD}HUBUNGI KAMI (WA)${NC}    : ${CYAN}https://wa.me/6282210383000${NC}"
 echo -e "${CYAN}╚══════════════════════════════════════════════════════════════════════╝${NC}\n"

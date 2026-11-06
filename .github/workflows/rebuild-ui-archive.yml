@@ -1,0 +1,138 @@
+name: Rebuild RF MEDIA GenieACS UI archive
+
+on:
+  push:
+    branches:
+      - rf-media-branding-20261103
+    paths:
+      - .github/workflows/rebuild-ui-archive.yml
+      - rf-media-ui/modern-theme.css
+
+permissions:
+  contents: write
+
+jobs:
+  rebuild-ui-archive:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: rf-media-branding-20261103
+          fetch-depth: 0
+
+      - name: Rebuild archive with RF MEDIA branding
+        run: |
+          python3 - <<'PY'
+          import io, json, os, re, tarfile
+          archive = "genieacs_ui_mod.tar.gz"
+          if not os.path.isfile(archive):
+              raise SystemExit(f"Missing source archive: {archive}")
+          temp = archive + ".tmp"
+          removed = {"genieacs/public/donasi.html", "genieacs/public/qris.jpg"}
+          changed = set()
+          theme_css = open("rf-media-ui/modern-theme.css", "rb").read()
+          with tarfile.open(archive, "r:gz") as source, tarfile.open(temp, "w:gz", compresslevel=9) as target:
+              for member in source.getmembers():
+                  if member.name in removed:
+                      continue
+                  if not member.isfile():
+                      target.addfile(member)
+                      continue
+                  original = source.extractfile(member).read()
+                  data = original
+                  if member.name == "genieacs/public/app.js":
+                      marker = b"RF MEDIA modern light UI"
+                      if marker not in data:
+                          css_text = theme_css.decode("utf-8")
+                          css_json = json.dumps(css_text)
+                          bootstrap = (
+                              "(function(){var s=document.createElement('style');"
+                              "s.id='rf-media-modern-light';"
+                              "s.textContent=" + css_json + ";"
+                              "(document.head||document.documentElement).appendChild(s);"
+                              "})();"
+                          ).encode("utf-8")
+                          data = bootstrap + data
+                      text = data.decode("utf-8")
+                      replacements = [
+                          ('n.push((0,je.default)("li",{class:t.donasi},(0,je.default)("a",{href:"#!/donasi"},"💖 Donasi"))),', ''),
+                          ('"bot","peta","donasi","voice"', '"bot","peta","voice"'),
+                          ('"/donasi":Ze("donasi",{component:()=>({view:()=>(document.title="Donasi - GenieACS",(0,jt.default)("div",{style:"width:100%;height:calc(100vh - 65px);padding:0;margin:0;overflow:hidden;"},(0,jt.default)("iframe",{src:"/donasi.html",style:"width:100%;height:100%;border:none;display:block;background:transparent;"})))})}),', ''),
+                          ('"/admin/donasi":{onmatch:()=>jt.default.route.set("/donasi")},', '')
+                      ]
+                      for old, new in replacements:
+                          count = text.count(old)
+                          if count == 1:
+                              text = text.replace(old, new)
+                          elif count > 1:
+                              raise SystemExit(f"app.js pattern is ambiguous ({count}): {old[:80]}")
+                          # count == 0 means the replacement was already applied.
+                      if re.search(r"donasi|qris", text, re.I):
+                          raise SystemExit("Donation reference remains in app.js")
+                      data = text.encode()
+                      changed.add(member.name)
+                  elif member.name == "genieacs/public/peta.html":
+                      text = data.decode("utf-8")
+                      for old, new in [
+                          ("Peta Jaringan ODP & Pemetaan Klien - ALIJAYA NET", "Peta Jaringan ODP & Pemetaan Klien - RF MEDIA"),
+                          ("🗺️ ALIJAYA NET", "🗺️ RF MEDIA")
+                      ]:
+                          count = text.count(old)
+                          if count == 1:
+                              text = text.replace(old, new)
+                          elif count > 1:
+                              raise SystemExit(f"peta.html pattern is ambiguous: {old}")
+                      data = text.encode()
+                      changed.add(member.name)
+                  elif member.name == "genieacs/public/voice.html":
+                      text = data.decode("utf-8")
+                      for old, new in [
+                          ("Voice AI Assistant | ALIJAYA NET", "Voice AI Assistant | RF MEDIA"),
+                          ("ALIJAYA NET AI", "RF MEDIA AI"),
+                          ("layanan panggilan suara ALIJAYA NET", "layanan panggilan suara RF MEDIA")
+                      ]:
+                          count = text.count(old)
+                          if count == 1:
+                              text = text.replace(old, new)
+                          elif count > 1:
+                              raise SystemExit(f"voice.html pattern is ambiguous: {old}")
+                      data = text.encode()
+                      changed.add(member.name)
+                  elif member.name == "genieacs/public/logo.svg":
+                      text = data.decode("utf-8")
+                      count = text.count("ALIJAYA")
+                      if count > 1:
+                          raise SystemExit("logo.svg wordmark pattern is ambiguous")
+                      data = text.replace("ALIJAYA", "RF MEDIA").encode()
+                      changed.add(member.name)
+                  member.size = len(data)
+                  target.addfile(member, io.BytesIO(data))
+          os.replace(temp, archive)
+          with tarfile.open(archive, "r:gz") as check:
+              names = set(check.getnames())
+              assert not (removed & names), "Donation assets still present"
+              for name in ("genieacs/public/app.js", "genieacs/public/peta.html", "genieacs/public/voice.html", "genieacs/public/logo.svg"):
+                  assert name in names, f"Missing required asset: {name}"
+              app = check.extractfile("genieacs/public/app.js").read().decode("utf-8")
+              assert not re.search(r"donasi|qris", app, re.I), "Donation route/menu still present"
+          print("Archive rebuilt. Updated:", sorted(changed))
+          PY
+
+      - name: Verify JavaScript syntax
+        run: |
+          mkdir -p /tmp/rf-ui-check
+          tar -xzf genieacs_ui_mod.tar.gz -C /tmp/rf-ui-check genieacs/public/app.js
+          node --check /tmp/rf-ui-check/genieacs/public/app.js
+
+      - name: Commit rebuilt archive to PR branch
+        run: |
+          if git diff --quiet -- genieacs_ui_mod.tar.gz; then
+            echo "Archive already matches RF MEDIA branding; no commit needed."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add genieacs_ui_mod.tar.gz
+          git commit -m "Rebuild GenieACS UI archive with RF MEDIA branding"
+          git push origin HEAD:rf-media-branding-20261103

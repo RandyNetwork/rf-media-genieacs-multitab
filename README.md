@@ -5,7 +5,7 @@
 [![Node.js Version](https://img.shields.io/badge/Node.js-v20%20LTS-green?logo=node.js)](https://nodejs.org/)
 [![Database](https://img.shields.io/badge/Database-MongoDB%204.4%2B%20%7C%206.x%20%7C%207.x-brightgreen?logo=mongodb)](https://www.mongodb.com/)
 [![Platform](https://img.shields.io/badge/Platform-Armbian%20%7C%20Linux%20SBC%20%7C%20Ubuntu%20%7C%20Debian-yellow?logo=linux)](https://www.armbian.com/)
-[![Brand](https://img.shields.io/badge/Brand-RF%20MEDIA-bb002e)](https://wa.me/6281947215703)
+[![Brand](https://img.shields.io/badge/Brand-RF%20MEDIA-bb002e)](https://wa.me/6282210383000)
 [![License](https://img.shields.io/badge/License-MIT-purple)](#)
 
 ![RF Media — GenieACS Multi-Tab](brandingrf-media-header.png)
@@ -19,8 +19,9 @@ Modifikasi **RF Media GenieACS Multi-Tab**, fork komunitas berbasis project Geni
 Fork ini diberi identitas dan dipelihara oleh **RF MEDIA**. Kode dasar dan pengembangan upstream berasal dari **ALIJAYA NET**:
 * **Brand / Maintainer Fork** : **RF MEDIA**  
 *Project upstream dan pengembang asli: ALIJAYA NET.*
-* **WhatsApp / Telepon** : [**081947215703**](https://wa.me/6281947215703) (`+62 819-4721-5703`)
-* **Repository Resmi** : [https://github.com/alijayanet/genieacs-multitab-mod](https://github.com/alijayanet/genieacs-multitab-mod)
+* **WhatsApp / Telepon** : [**082210383000**](https://wa.me/6282210383000) (`+62 822-1038-3000`)
+* **Repository RF MEDIA (instalasi & update resmi)** : [RandyNetwork/rf-media-genieacs-multitab](https://github.com/RandyNetwork/rf-media-genieacs-multitab)  
+* **Upstream (sumber kode asli)** : [alijayanet/genieacs-multitab-mod](https://github.com/alijayanet/genieacs-multitab-mod) — hanya sumber pembaruan fitur, bukan sumber instalasi langsung.
 * **Kebutuhan** : Tanya jawab teknis, panduan instalasi di STB Armbian (B860H, HG680P, dsb), integrasi billing, penyesuaian parameter khusus, dan konsultasi jaringan RT/RW Net.
 
 ---
@@ -124,8 +125,8 @@ Gunakan metode ini jika server Anda **sudah memiliki GenieACS aktif dan sudah ad
 1. **Unduh Paket Template & Script Penerap**:
    ```bash
    cd /root
-   git clone https://github.com/alijayanet/genieacs-multitab-mod.git
-   cd genieacs-multitab-mod
+   git clone https://github.com/RandyNetwork/rf-media-genieacs-multitab.git
+   cd rf-media-genieacs-multitab
    ```
 
 2. **Jalankan Script Penerap**:
@@ -154,7 +155,7 @@ Repositori ini kini dilengkapi modul **Dual Bot AI Agent (Telegram & WhatsApp Ba
    * Menangani sistem WhatsApp Multi-Device yang kerap mengirim pesan dengan akhiran `@lid` alih-alih `@s.whatsapp.net`.
    * Otomatis memetakan `@lid` ke nomor asli dan nama pelanggan secara real-time.
 4. **Layanan Mandiri Pelanggan (Customer Self-Service via Tags GenieACS)**:
-   * **Integrasi Tag Nomor WA di GenieACS**: Admin cukup menambahkan tag nomor WhatsApp pelanggan di Web UI GenieACS (misal: `081947215703` atau `wa:081947215703`), atau via chat bot: `tag <username_pppoe> <nomor_wa>`.
+   * **Integrasi Tag Nomor WA di GenieACS**: Admin cukup menambahkan tag nomor WhatsApp pelanggan di Web UI GenieACS (misal: `082210383000` atau `wa:082210383000`), atau via chat bot: `tag <username_pppoe> <nomor_wa>`.
    * **Pendaftaran Mandiri Otomatis**: Pelanggan juga dapat mendaftar sendiri dari WhatsApp dengan mengetik: `daftar <id_pppoe>`. Sistem otomatis menempelkan tag nomor HP pelanggan ke database modem di GenieACS.
    * **Fitur Mandiri Pelanggan (24 Jam Non-Stop)**:
      * `cek` ➔ Melihat status internet, nama WiFi (SSID), sandi saat ini, kualitas sinyal RX, dan perangkat terkoneksi.
@@ -247,6 +248,13 @@ Ikuti panduan interaktif di layar untuk mengisi Token Telegram, Chat ID, Nomor A
 ## 📁 Struktur File Repository
 
 ```text
+├── branding/config.json          # Identitas resmi RF MEDIA dan kebijakan branding
+├── UPSTREAM_UPDATE.md            # Prosedur sinkronisasi upstream yang aman
+```
+
+Konfigurasi identitas terpusat berada di `branding/config.json`. Setiap perubahan upstream wajib mempertahankan nilai brand, kontak, repository resmi, dan status halaman donasi di file tersebut.
+
+```text
 ├── README.md                     # Dokumentasi resmi & panduan lengkap
 ├── install-genieacs-armbian.sh   # Script auto-installer GenieACS + MongoDB + Agent untuk server baru
 ├── apply-template.sh             # Script pengubah tema & multi-tab untuk server yang sudah aktif
@@ -256,7 +264,7 @@ Ikuti panduan interaktif di layar untuk mengisi Token Telegram, Chat ID, Nomor A
 │   ├── package.json              # Dependensi @whiskeysockets/baileys@7.0.0-rc11, pino, qrcode
 │   ├── waLidStore.mjs            # Penyimpanan pemetaan LID Multi-Device WhatsApp
 │   └── whatsapp-bot.mjs          # Socket engine Baileys, auto-reconnect, QR generator, gateway HTTP 7559
-├── genieacs_ui_mod.tar.gz        # Bundle frontend Multi-Tab ALIJAYA NET (app.js, css, logo, binary modifikasi)
+├── genieacs_ui_mod.tar.gz        # Bundle frontend Multi-Tab versi RF MEDIA
 ├── genieacs_template_ui.tar.gz   # Arsip template UI (~17 KB) tanpa data perangkat
 └── genieacs_db.tar.gz            # Backup database template (~21 KB) siap pakai tanpa data ONT asing
 ```
@@ -268,8 +276,10 @@ Ikuti panduan interaktif di layar untuk mengisi Token Telegram, Chat ID, Nomor A
 Jika Anda menemukan bug, memiliki saran parameter baru, atau membutuhkan bantuan instalasi dan integrasi jaringan:
 * **Maintainer fork** : **RF MEDIA**  
 *Pengembang asli project upstream: ALIJAYA NET.*
-* **WhatsApp** : [**081947215703**](https://wa.me/6281947215703) (`0819-4721-5703`)
+* **WhatsApp** : [**082210383000**](https://wa.me/6282210383000) (`+62 822-1038-3000`)
 * **Issues / Feedback** : Silakan buat tiket melalui tab [Issues di GitHub](https://github.com/RandyNetwork/rf-media-genieacs-multitab/issues).
+
+> **Kebijakan update:** gunakan branch `main` repository RF MEDIA untuk instalasi dan update. Jangan menjalankan `git pull` dari repository upstream AliJaya Net pada folder instalasi RF MEDIA. Pembaruan upstream harus melalui proses staging, audit konflik, penerapan branding RF MEDIA, pengujian, lalu Pull Request ke `main`. Detailnya ada di [UPSTREAM_UPDATE.md](UPSTREAM_UPDATE.md).
 
 ---
 

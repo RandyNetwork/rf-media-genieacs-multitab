@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # ==============================================================================
 # ALIJAYA NET - GenieACS AI Telegram Agent (Full Multi-Tab & Operations Mod)
-# Pengembang: ALIJAYA NET (WhatsApp: 081947215703)
+# Upstream developer: ALIJAYA NET | RF MEDIA support: 082210383000
 # ==============================================================================
 
 import os
@@ -160,15 +160,15 @@ def get_config():
         _RESOLVED_MONGO_URI = None
         return {}
 
-BRAND_NAME = "ALIJAYA NET"
-BRAND_PHONE = "081947215703"
+BRAND_NAME = "RF MEDIA"
+BRAND_PHONE = "082210383000"
 
 def update_branding(cfgs):
     global BRAND_NAME, BRAND_PHONE
     b_name = cfgs.get("agent.brand.name", "").strip()
     b_phone = cfgs.get("agent.brand.phone", "").strip()
-    BRAND_NAME = b_name if b_name else "ALIJAYA NET"
-    BRAND_PHONE = b_phone if b_phone else "081947215703"
+    BRAND_NAME = b_name if b_name else "RF MEDIA"
+    BRAND_PHONE = b_phone if b_phone else "082210383000"
 
 def is_valid_token(val):
     if not val:
@@ -3311,7 +3311,7 @@ HTML_CONFIG_PAGE = """<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pengaturan Bot AI & WhatsApp - ALIJAYA NET</title>
+  <title>Pengaturan Bot AI & WhatsApp - RF MEDIA</title>
   <style>
     :root {
       --bg: #050833;
@@ -3479,7 +3479,7 @@ HTML_CONFIG_PAGE = """<!DOCTYPE html>
 
         <div class="form-group">
           <label>Nomor WhatsApp Admin / Teknisi:</label>
-          <textarea id="wa_admin_numbers" name="wa_admin_numbers" placeholder="Contoh: 081947215703, 081234567890"></textarea>
+          <textarea id="wa_admin_numbers" name="wa_admin_numbers" placeholder="Contoh: 082210383000, 081234567890"></textarea>
           <div class="hint">Nomor yang memiliki hak akses perintah administratif (cek, redaman, reboot, wifion/off, ssid, dll). Pisahkan koma jika lebih dari satu.</div>
         </div>
 
@@ -3543,13 +3543,13 @@ HTML_CONFIG_PAGE = """<!DOCTYPE html>
       <div id="tab-brand" class="tab-pane">
         <div class="form-group">
           <label>Nama Brand / ISP / RT-RW Net:</label>
-          <input type="text" id="brand_name" name="brand_name" placeholder="ALIJAYA NET">
+          <input type="text" id="brand_name" name="brand_name" placeholder="RF MEDIA">
           <div class="hint">Nama usaha yang akan tampil pada header pesan Telegram & WhatsApp.</div>
         </div>
 
         <div class="form-group">
           <label>Nomor Telepon / WhatsApp Customer Service:</label>
-          <input type="text" id="brand_phone" name="brand_phone" placeholder="081947215703">
+          <input type="text" id="brand_phone" name="brand_phone" placeholder="082210383000">
           <div class="hint">Nomor kontak layanan bantuan pada footer pesan.</div>
         </div>
 
@@ -3945,7 +3945,7 @@ HTML_CONFIG_PAGE = """<!DOCTYPE html>
       this.disabled = true;
 
       const targetId = adminId.split(',')[0].trim();
-      const testMsg = '🔔 *TES NOTIFIKASI GENIEACS BOT*' + String.fromCharCode(10) + String.fromCharCode(10) + 'Koneksi bot Telegram ALIJAYA NET berhasil terhubung dengan server!';
+      const testMsg = '🔔 *TES NOTIFIKASI GENIEACS BOT RF MEDIA*' + String.fromCharCode(10) + String.fromCharCode(10) + 'Koneksi bot Telegram RF MEDIA berhasil terhubung dengan server!';
       const tgUrl = 'https://api.telegram.org/bot' + token + '/sendMessage?chat_id=' + targetId + '&text=' + encodeURIComponent(testMsg) + '&parse_mode=Markdown';
 
       fetch(tgUrl)
@@ -4105,7 +4105,7 @@ HTML_LOGIN_PAGE = """<!DOCTYPE html>
         📶 Masuk ke Portal Mandiri WiFi Pelanggan &rarr;
       </a>
     </div>
-    <div class="footer">ALIJAYA NET TR-069 Management</div>
+    <div class="footer">RF MEDIA TR-069 Management</div>
   </div>
 
   <script>
@@ -5703,7 +5703,7 @@ def start_web_server(port=7558):
         logger.error(f"Gagal menjalankan Bot Web Config server di port {port}: {e}")
 
 def main():
-    logger.info("Starting ALIJAYA NET GenieACS AI Agent Service...")
+    logger.info("Starting RF MEDIA GenieACS AI Agent Service...")
     web_thread = threading.Thread(target=start_web_server, args=(7558,), daemon=True)
     web_thread.start()
     last_update_id = 0
