@@ -62,9 +62,12 @@ jobs:
                           ('"/admin/donasi":{onmatch:()=>jt.default.route.set("/donasi")},', '')
                       ]
                       for old, new in replacements:
-                          if text.count(old) != 1:
-                              raise SystemExit(f"app.js pattern mismatch ({text.count(old)}): {old[:80]}")
-                          text = text.replace(old, new)
+                          count = text.count(old)
+                          if count == 1:
+                              text = text.replace(old, new)
+                          elif count > 1:
+                              raise SystemExit(f"app.js pattern is ambiguous ({count}): {old[:80]}")
+                          # count == 0 means the replacement was already applied.
                       if re.search(r"donasi|qris", text, re.I):
                           raise SystemExit("Donation reference remains in app.js")
                       data = text.encode()
