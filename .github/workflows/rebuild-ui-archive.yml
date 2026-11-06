@@ -78,9 +78,11 @@ jobs:
                           ("Peta Jaringan ODP & Pemetaan Klien - ALIJAYA NET", "Peta Jaringan ODP & Pemetaan Klien - RF MEDIA"),
                           ("🗺️ ALIJAYA NET", "🗺️ RF MEDIA")
                       ]:
-                          if text.count(old) != 1:
-                              raise SystemExit(f"peta.html pattern mismatch: {old}")
-                          text = text.replace(old, new)
+                          count = text.count(old)
+                          if count == 1:
+                              text = text.replace(old, new)
+                          elif count > 1:
+                              raise SystemExit(f"peta.html pattern is ambiguous: {old}")
                       data = text.encode()
                       changed.add(member.name)
                   elif member.name == "genieacs/public/voice.html":
@@ -90,15 +92,18 @@ jobs:
                           ("ALIJAYA NET AI", "RF MEDIA AI"),
                           ("layanan panggilan suara ALIJAYA NET", "layanan panggilan suara RF MEDIA")
                       ]:
-                          if text.count(old) != 1:
-                              raise SystemExit(f"voice.html pattern mismatch: {old}")
-                          text = text.replace(old, new)
+                          count = text.count(old)
+                          if count == 1:
+                              text = text.replace(old, new)
+                          elif count > 1:
+                              raise SystemExit(f"voice.html pattern is ambiguous: {old}")
                       data = text.encode()
                       changed.add(member.name)
                   elif member.name == "genieacs/public/logo.svg":
                       text = data.decode("utf-8")
-                      if text.count("ALIJAYA") != 1:
-                          raise SystemExit("logo.svg wordmark pattern mismatch")
+                      count = text.count("ALIJAYA")
+                      if count > 1:
+                          raise SystemExit("logo.svg wordmark pattern is ambiguous")
                       data = text.replace("ALIJAYA", "RF MEDIA").encode()
                       changed.add(member.name)
                   member.size = len(data)
