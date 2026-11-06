@@ -44,7 +44,7 @@ jobs:
                   if member.name == "genieacs/public/app.css":
                       marker = b"/* RF MEDIA modern light UI — presentation layer only."
                       if marker not in data:
-                          data = data.rstrip() + b"\\n\\n" + theme_css
+                          data = data.rstrip() + b"\n\n" + theme_css
                       changed.add(member.name)
                   elif member.name == "genieacs/public/app.js":
                       text = data.decode("utf-8")
