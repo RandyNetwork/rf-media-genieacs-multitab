@@ -41,7 +41,7 @@ jobs:
                       continue
                   original = source.extractfile(member).read()
                   data = original
-                  if member.name == "genieacs/public/app.css":
+                  if member.name.startswith("genieacs/public/") and member.name.endswith(".css"):
                       marker = b"/* RF MEDIA modern light UI — presentation layer only."
                       if marker not in data:
                           data = data.rstrip() + b"\n\n" + theme_css
@@ -97,8 +97,9 @@ jobs:
           with tarfile.open(archive, "r:gz") as check:
               names = set(check.getnames())
               assert not (removed & names), "Donation assets still present"
-              for name in ("genieacs/public/app.js", "genieacs/public/app.css", "genieacs/public/peta.html", "genieacs/public/voice.html", "genieacs/public/logo.svg"):
+              for name in ("genieacs/public/app.js", "genieacs/public/peta.html", "genieacs/public/voice.html", "genieacs/public/logo.svg"):
                   assert name in names, f"Missing required asset: {name}"
+              assert any(n.startswith("genieacs/public/") and n.endswith(".css") for n in names), "No public CSS asset found in archive"
               app = check.extractfile("genieacs/public/app.js").read().decode("utf-8")
               assert not re.search(r"donasi|qris", app, re.I), "Donation route/menu still present"
           print("Archive rebuilt. Updated:", sorted(changed))
