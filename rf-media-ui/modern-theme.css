@@ -1,0 +1,96 @@
+/* RF MEDIA modern light UI — presentation layer only.
+   No selectors below target ACS parameter names, API payloads or provisioning logic. */
+:root {
+  color-scheme: light;
+  --rf-bg: #f4f7fb;
+  --rf-surface: #ffffff;
+  --rf-surface-soft: #f8fafc;
+  --rf-text: #172334;
+  --rf-muted: #68788d;
+  --rf-line: #e4eaf2;
+  --rf-blue: #1769e0;
+  --rf-blue-soft: #eaf2ff;
+  --rf-green: #159b62;
+  --rf-red: #d94b54;
+  --rf-shadow: 0 8px 26px rgba(23, 45, 78, .07);
+}
+html, body, body.theme-dark, html.theme-dark {
+  background: var(--rf-bg) !important;
+  color: var(--rf-text) !important;
+  color-scheme: light !important;
+}
+body, button, input, select, textarea {
+  font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif !important;
+}
+body { font-size: 14px; line-height: 1.5; }
+a { color: var(--rf-blue); }
+a:hover { color: #0d4fb5; }
+#side-menu {
+  background: #fff !important;
+  border-right: 1px solid var(--rf-line) !important;
+  box-shadow: 3px 0 18px rgba(23,45,78,.035);
+}
+#side-menu ul { padding: 12px 10px !important; }
+#side-menu li { margin: 3px 0 !important; border-radius: 9px !important; }
+#side-menu li a {
+  display: block; padding: 10px 13px !important; border-radius: 9px !important;
+  color: #43536a !important; font-weight: 550; transition: background .15s ease, color .15s ease;
+}
+#side-menu li a:hover { background: var(--rf-blue-soft) !important; color: var(--rf-blue) !important; }
+#side-menu li.active a, #side-menu li.selected a {
+  background: var(--rf-blue-soft) !important; color: var(--rf-blue) !important; font-weight: 700;
+}
+.user-menu {
+  background: #fff !important; color: var(--rf-text) !important;
+  border-bottom: 1px solid var(--rf-line) !important; padding: 10px 18px !important;
+}
+.user-menu a, .user-menu button { color: var(--rf-text) !important; }
+button, input[type="button"], input[type="submit"], .btn {
+  border-radius: 7px !important; transition: background .15s ease, box-shadow .15s ease;
+}
+button, input[type="button"], input[type="submit"] {
+  border-color: #d7e0ec !important;
+}
+button:hover, input[type="button"]:hover, input[type="submit"]:hover {
+  box-shadow: 0 3px 10px rgba(23,105,224,.12);
+}
+input:not([type="checkbox"]):not([type="radio"]), select, textarea {
+  background: #fff !important; color: var(--rf-text) !important;
+  border: 1px solid #dce4ee !important; border-radius: 7px !important;
+  padding: 7px 10px; box-shadow: none !important;
+}
+input:focus, select:focus, textarea:focus {
+  outline: 0 !important; border-color: #7eaff7 !important;
+  box-shadow: 0 0 0 3px rgba(23,105,224,.11) !important;
+}
+table { border-collapse: separate !important; border-spacing: 0 !important; }
+thead th, table th {
+  background: #f4f7fb !important; color: #46566d !important;
+  border-color: var(--rf-line) !important; font-weight: 700 !important;
+}
+table td, table th { border-color: var(--rf-line) !important; }
+tbody tr:hover, table tr:hover { background: #f7faff !important; }
+hr { border: 0; border-top: 1px solid var(--rf-line) !important; }
+fieldset, .panel, .card, .box, .modal-content, .overlay {
+  border-color: var(--rf-line) !important; border-radius: 10px !important;
+}
+.modal, .overlay-wrapper { backdrop-filter: blur(3px); }
+pre, code { border-radius: 6px; }
+.pie-chart, .legend, .parameter-value { color: var(--rf-text); }
+.theme-dark, .theme-dark body, body.theme-dark, html.theme-dark {
+  background: var(--rf-bg) !important; color: var(--rf-text) !important;
+  color-scheme: light !important;
+}
+.theme-dark #side-menu, body.theme-dark #side-menu { background: #fff !important; }
+.theme-dark .user-menu, body.theme-dark .user-menu { background: #fff !important; color: var(--rf-text) !important; }
+.theme-dark table th, body.theme-dark table th { background: #f4f7fb !important; color: #46566d !important; }
+.theme-dark table td, body.theme-dark table td { color: var(--rf-text) !important; border-color: var(--rf-line) !important; }
+.theme-dark input, .theme-dark select, .theme-dark textarea,
+body.theme-dark input, body.theme-dark select, body.theme-dark textarea {
+  background: #fff !important; color: var(--rf-text) !important; border-color: #dce4ee !important;
+}
+@media (max-width: 760px) {
+  #side-menu { max-width: min(82vw, 280px); }
+  .user-menu { padding: 8px 12px !important; }
+  table { font-size: 12px; }
+}
