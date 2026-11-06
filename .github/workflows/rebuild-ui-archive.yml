@@ -51,7 +51,7 @@ jobs:
                               "s.id='rf-media-modern-light';"
                               "s.textContent=" + css_json + ";"
                               "(document.head||document.documentElement).appendChild(s);"
-                              "})();\\n"
+                              "})();"
                           ).encode("utf-8")
                           data = bootstrap + data
                       text = data.decode("utf-8")
