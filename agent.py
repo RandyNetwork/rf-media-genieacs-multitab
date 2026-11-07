@@ -3111,7 +3111,7 @@ def handle_incoming_message(token, chat_id, user_text, gemini_key, model_name, i
         send_telegram(token, chat_id, get_bad_rx_summary(), reply_markup=get_main_menu_keyboard())
         return
 
-    offline_match = re.fullmatch(r"(?:/offline|offline)(?:\\s+(\\d+))?", txt.strip(), re.IGNORECASE)
+    offline_match = re.fullmatch(r"(?:/offline|offline)(?:\s+(\d+))?", txt.strip(), re.IGNORECASE)
     if txt == "🔴 Cek Modem Offline" or offline_match:
         USER_STATES.pop(chat_id, None)
         threshold = int(offline_match.group(1)) if offline_match and offline_match.group(1) else 10
