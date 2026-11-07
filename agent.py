@@ -2206,7 +2206,7 @@ def register_bot_commands(token):
         {"command": "menu", "description": "Tampilkan Menu Tombol Cepat"},
         {"command": "cek", "description": "Cek redaman & status: /cek <user_atau_sn>"},
         {"command": "redaman", "description": "Audit modem redaman kritis / drop"},
-        {"command": "offline", "description": "Daftar modem tidak Inform lebih dari 10 menit"},
+        {"command": "offline", "description": "Cek modem offline: /offline [5|10|30]"},
         {"command": "ontbaru", "description": "Cek modem baru belum disetting PPPoE"},
         {"command": "klien", "description": "Cek HP/laptop terhubung: /klien <user>"},
         {"command": "addwan", "description": "Tambah/Set WAN: /addwan <sn> <user> <pass> [vlan]"},
@@ -3111,9 +3111,14 @@ def handle_incoming_message(token, chat_id, user_text, gemini_key, model_name, i
         send_telegram(token, chat_id, get_bad_rx_summary(), reply_markup=get_main_menu_keyboard())
         return
 
-    if txt in ["🔴 Cek Modem Offline", "/offline", "offline"]:
+    offline_match = re.fullmatch(r"(?:/offline|offline)(?:\\s+(\\d+))?", txt.strip(), re.IGNORECASE)
+    if txt == "🔴 Cek Modem Offline" or offline_match:
         USER_STATES.pop(chat_id, None)
-        send_telegram(token, chat_id, get_offline_modems_summary(10), reply_markup=get_main_menu_keyboard())
+        threshold = int(offline_match.group(1)) if offline_match and offline_match.group(1) else 10
+        if threshold not in (5, 10, 30):
+            send_telegram(token, chat_id, "⚠️ Pilihan ambang tidak valid. Gunakan: `/offline 5`, `/offline 10`, atau `/offline 30`.", reply_markup=get_main_menu_keyboard())
+            return
+        send_telegram(token, chat_id, get_offline_modems_summary(threshold), reply_markup=get_main_menu_keyboard())
         return
 
     if txt in ["🆕 Modem Belum Setting", "/ontbaru", "/unconf"]:
