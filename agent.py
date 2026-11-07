@@ -4443,6 +4443,27 @@ def apply_system_update():
                     tar_cmd = subprocess.run(["tar", "-zxf", tar_file, "-C", node_dir + "/"], capture_output=True, text=True, timeout=30)
                     if tar_cmd.returncode == 0:
                         log(f"  ✓ genieacs_ui_mod.tar.gz diekstrak ke {node_dir}/.")
+                        # Pulihkan branding RF MEDIA setelah paket UI menimpa aset public.
+                        branding_backup_dir = "/root/backup-rfmedia-branding"
+                        branding_files = [
+                            "logo.svg",
+                            "app.css",
+                            "rf-media-genieacs-logo.png",
+                            "rf-media-genieacs-logo-dark.png",
+                        ]
+                        branding_pub = os.path.join(genie_target, "public")
+                        if os.path.isdir(branding_pub) and os.path.isdir(branding_backup_dir):
+                            restored = 0
+                            for branding_file in branding_files:
+                                backup_file = os.path.join(branding_backup_dir, branding_file)
+                                if os.path.isfile(backup_file):
+                                    shutil.copy2(backup_file, os.path.join(branding_pub, branding_file))
+                                    restored += 1
+                            log(f"  ✓ Branding RF MEDIA dipulihkan: {restored}/{len(branding_files)} file.")
+                        else:
+                            log("  ⚠️ Backup branding RF MEDIA tidak ditemukan; logo bawaan paket tetap digunakan.")
+                    else:
+                        log(f"  ⚠️ Ekstraksi genieacs_ui_mod.tar.gz gagal ke {node_dir}: {tar_cmd.stderr.strip()}")
                     bin_dir = os.path.join(genie_target, "bin")
                     if os.path.exists(bin_dir):
                         subprocess.run(["chmod", "+x"] + [os.path.join(bin_dir, f) for f in os.listdir(bin_dir)], check=False)
