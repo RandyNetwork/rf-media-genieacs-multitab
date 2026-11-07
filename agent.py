@@ -199,7 +199,7 @@ def get_main_menu_keyboard():
             [{"text": "👥 Daftar Klien WiFi"}, {"text": "🆕 Modem Belum Setting"}],
             [{"text": "🌐 Tambah / Set WAN"}, {"text": "🔄 Reboot Modem"}],
             [{"text": "📶 Ubah WiFi / Sandi"}, {"text": "📊 Status Server STB"}],
-            [{"text": "❓ Bantuan / Help"}]
+            [{"text": "🔴 Cek Modem Offline"}, {"text": "❓ Bantuan / Help"}]
         ],
         "resize_keyboard": True,
         "is_persistent": True
@@ -797,6 +797,35 @@ def get_unconfigured_onts():
     lines.append("━━━━━━━━━━━━━━━━━━━━")
     lines.append(f"Total ONT baru: *{len(unconf_list)} perangkat*.")
     return "\n".join(lines)
+
+
+def get_offline_modems_summary(threshold_minutes=10, limit=25):
+    """List devices whose last Inform exceeds the offline threshold."""
+    db = get_db()
+    if db is None:
+        return "❌ Gagal membuka database MongoDB."
+    cutoff = datetime.utcnow() - timedelta(minutes=threshold_minutes)
+    q = {"$or": [{"_lastInform": {"$lt": cutoff}}, {"_lastInform": {"$exists": False}}, {"_lastInform": None}]}
+    try:
+        total = db.devices.count_documents(q)
+        cursor = db.devices.find(q).sort("_lastInform", 1).limit(limit)
+        lines = [f"🔴 *DAFTAR MODEM OFFLINE (> {threshold_minutes} MENIT)*", "━━━━━━━━━━━━━━━━━━━━", f"Total terdeteksi: *{total} modem*", f"Ditampilkan: maksimal {limit} perangkat", ""]
+        for idx, dev in enumerate(cursor, start=1):
+            dev_id = dev.get("_id", "-")
+            did = dev.get("_deviceId") or {}
+            sn = did.get("_SerialNumber") or dev_id
+            hw = f"{did.get('_Manufacturer') or '-'} {did.get('_ProductClass') or '-'}"
+            username = get_device_pppoe_username(dev)
+            last = dev.get("_lastInform")
+            age = f"{int(get_datetime_diff_seconds(last) // 60)} menit lalu" if last else "belum pernah Inform / waktu kosong"
+            lines.append(f"{idx}. *{username}*\n   SN: `{sn}`\n   Perangkat: {hw}\n   Last Inform: {age}")
+        if total == 0:
+            return f"✅ Tidak ada modem yang melewati batas offline {threshold_minutes} menit."
+        lines.extend(["", "━━━━━━━━━━━━━━━━━━━━", "_Status berdasarkan Last Inform GenieACS; bukan verifikasi langsung modem mati._"])
+        return "\n".join(lines)
+    except Exception as e:
+        logger.error(f"Failed to get offline modem list: {e}")
+        return f"❌ Gagal mengambil daftar modem offline: {e}"
 
 def set_wifi_credentials(dev, new_ssid=None, new_password=None):
     if not dev:
@@ -2177,6 +2206,7 @@ def register_bot_commands(token):
         {"command": "menu", "description": "Tampilkan Menu Tombol Cepat"},
         {"command": "cek", "description": "Cek redaman & status: /cek <user_atau_sn>"},
         {"command": "redaman", "description": "Audit modem redaman kritis / drop"},
+        {"command": "offline", "description": "Daftar modem tidak Inform lebih dari 10 menit"},
         {"command": "ontbaru", "description": "Cek modem baru belum disetting PPPoE"},
         {"command": "klien", "description": "Cek HP/laptop terhubung: /klien <user>"},
         {"command": "addwan", "description": "Tambah/Set WAN: /addwan <sn> <user> <pass> [vlan]"},
@@ -2559,6 +2589,11 @@ def process_agent_command(user_text, sender_id="admin", is_admin=True, gemini_ke
     cmd = parts[0].lower() if parts else ""
     rest = parts[1].strip() if len(parts) > 1 else ""
 
+    if cmd in ["offline", "ofline", "modemoffline"]:
+        if not is_admin:
+            return ("⛔ Perintah ini khusus untuk Admin.", None)
+        return (get_offline_modems_summary(10), get_main_menu_keyboard())
+
     # Normalization of aliases for typed text
     if cmd in ["bantuan", "help", "menu", "start"] or btn_phrase in ("bantuan help", "bantuan", "help", "menu"):
         cmd = "menu"
@@ -2608,6 +2643,7 @@ def process_agent_command(user_text, sender_id="admin", is_admin=True, gemini_ke
                 "📌 *Daftar Perintah Admin:*\n"
                 "• `cek <user_pppoe/sn>` ➔ Status lengkap & redaman ONT\n"
                 "• `redaman` ➔ Audit massal redaman kritis (< -26 dBm)\n"
+                "• `offline` ➔ Daftar modem tanpa Inform lebih dari 10 menit\n"
                 "• `ontbaru` ➔ Cek modem baru belum tersetting\n"
                 "• `klien <user>` ➔ Daftar HP/laptop terhubung WiFi\n"
                 "• `reboot <user>` ➔ Restart modem pelanggan\n"
@@ -3073,6 +3109,11 @@ def handle_incoming_message(token, chat_id, user_text, gemini_key, model_name, i
     if txt in ["⚠️ Cek Redaman Kritis", "/redaman", "/los"]:
         USER_STATES.pop(chat_id, None)
         send_telegram(token, chat_id, get_bad_rx_summary(), reply_markup=get_main_menu_keyboard())
+        return
+
+    if txt in ["🔴 Cek Modem Offline", "/offline", "offline"]:
+        USER_STATES.pop(chat_id, None)
+        send_telegram(token, chat_id, get_offline_modems_summary(10), reply_markup=get_main_menu_keyboard())
         return
 
     if txt in ["🆕 Modem Belum Setting", "/ontbaru", "/unconf"]:
