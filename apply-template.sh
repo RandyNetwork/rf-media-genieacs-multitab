@@ -1,11 +1,11 @@
 #!/bin/bash
 # ==============================================================================
-# SCRIPT PENERAP TAMPILAN & FITUR INFORMATIF GENIEACS (ALIJAYA NET)
+# SCRIPT PENERAP TAMPILAN & FITUR INFORMATIF GENIEACS (RF MEDIA)
 # Mengubah GenieACS standar menjadi GenieACS Informatif Multi-Tab:
 # WAN (Add WAN/PPPoE), WLAN (Multi-SSID & Client RSSI), LAN (Port LAN & Hosts),
 # USER (Web GUI Direct Link), TR-069 (CWMP Config), dan Bebas Fault.
 #
-# Dibuat oleh: ALIJAYA NET (WhatsApp: 081947215703)
+# Dibuat dan dikelola oleh: RF MEDIA
 # ==============================================================================
 
 set -e
@@ -21,11 +21,11 @@ NC='\033[0m'
 
 clear 2>/dev/null || true
 echo -e "${CYAN}╔══════════════════════════════════════════════════════════════════════╗${NC}"
-echo -e "${CYAN}║${BOLD}${GREEN}           🎨 ALIJAYA NET - TEMA & FITUR INFORMATIF GENIEACS          ${NC}${CYAN}║${NC}"
+echo -e "${CYAN}║${BOLD}${GREEN}           🎨 RF MEDIA - TEMA & FITUR INFORMATIF GENIEACS          ${NC}${CYAN}║${NC}"
 echo -e "${CYAN}║${BOLD}${YELLOW}       Upgrade GenieACS Standar Menjadi Multi-Tab & Informatif        ${NC}${CYAN}║${NC}"
 echo -e "${CYAN}║                                                                      ║${NC}"
-echo -e "${CYAN}║${NC}  👑 ${BOLD}Pengembang${NC}         : ${GREEN}${BOLD}ALIJAYA NET${NC}                                    ${CYAN}║${NC}"
-echo -e "${CYAN}║${NC}  📱 ${BOLD}WhatsApp / Kontak${NC}  : ${YELLOW}${BOLD}081947215703${NC}                                   ${CYAN}║${NC}"
+echo -e "${CYAN}║${NC}  👑 ${BOLD}Pengembang${NC}         : ${GREEN}${BOLD}RF MEDIA${NC}                                    ${CYAN}║${NC}"
+echo -e "${CYAN}║${NC}  🌐 ${BOLD}Pengelola${NC}           : ${YELLOW}${BOLD}RF MEDIA${NC}                                       ${CYAN}║${NC}"
 echo -e "${CYAN}╚══════════════════════════════════════════════════════════════════════╝${NC}"
 echo ""
 
@@ -218,7 +218,7 @@ except Exception:
 
 rm -rf "$TMP_DIR"
 
-# Terapkan UI Frontend Multi-Tab & Modifikasi Binaries (ALIJAYA NET)
+# Terapkan UI Frontend Multi-Tab & Modifikasi Binaries (RF MEDIA)
 MOD_ARCHIVE=""
 if [ -f "${SCRIPT_DIR}/genieacs_ui_mod.tar.gz" ]; then
   MOD_ARCHIVE="${SCRIPT_DIR}/genieacs_ui_mod.tar.gz"
@@ -229,7 +229,7 @@ elif [ -f "/root/genieacs-multitab-mod/genieacs_ui_mod.tar.gz" ]; then
 fi
 
 if [ -n "$MOD_ARCHIVE" ] && [ -f "$MOD_ARCHIVE" ]; then
-  echo -e "${YELLOW}Menerapkan tema & modul tampilan Multi-Tab (ALIJAYA NET)...${NC}"
+  echo -e "${YELLOW}Menerapkan tema & modul tampilan Multi-Tab (RF MEDIA)...${NC}"
   GENIE_DIR=""
   if [ -d "/usr/lib/node_modules/genieacs" ]; then
     GENIE_DIR="/usr/lib/node_modules/genieacs"
@@ -295,7 +295,7 @@ fi
 
 cat << 'EOF' > /etc/systemd/system/genieacs-agent.service
 [Unit]
-Description=GenieACS AI Telegram Agent (ALIJAYA NET)
+Description=GenieACS AI Telegram Agent (RF MEDIA)
 After=network.target mongod.service genieacs-nbi.service
 
 [Service]
@@ -315,7 +315,7 @@ EOF
 
 cat << 'EOF' > /etc/systemd/system/genieacs-whatsapp.service
 [Unit]
-Description=GenieACS WhatsApp AI Agent (Baileys Gateway - ALIJAYA NET)
+Description=GenieACS WhatsApp AI Agent (Baileys Gateway - RF MEDIA)
 After=network.target mongod.service genieacs-nbi.service genieacs-agent.service
 
 [Service]
@@ -443,4 +443,4 @@ echo -e "${YELLOW}• Web Bot UI   : Buka menu '🤖 Bot AI & WA' di GenieACS at
 echo -e "${CYAN}• Status Sesi  : Provision Bebas Fault & Kompatibel Semua Merk ONT${NC}"
 echo -e "${YELLOW}Silakan buka browser dan refresh (Ctrl + F5) pada halaman GenieACS UI.${NC}"
 echo -e "${GREEN}══════════════════════════════════════════════════════════════════════${NC}"
-echo -e "${BOLD}Bantuan & Konsultasi: WhatsApp 081947215703 (ALIJAYA NET)${NC}"
+echo -e "${BOLD}Pengelola Sistem: RF MEDIA${NC}"
