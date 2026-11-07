@@ -10,7 +10,7 @@
 
 ![RF Media — GenieACS Multi-Tab](brandingrf-media-header.png)
 
-Modifikasi **RF Media GenieACS Multi-Tab**, fork komunitas berbasis project GenieACS Multi-Tab Mod dari ALIJAYA NET. Tampilan dan fungsi **GenieACS TR-069 ACS Server** yang dirancang khusus untuk mempermudah operasional teknisi dan pengelola jaringan internet (**RT/RW Net / ISP Mandiri**). Mengubah tampilan standar GenieACS yang kosong/polos menjadi **Multi-Tab Informatif Lengkap**, mendukung tombol **"Add WAN"** langsung dari Web UI, pemantauan port fisik LAN, tabel Multi-SSID & sinyal RSSI klien WiFi, serta dilengkapi **script provision universal bebas fault (0 Faults)** untuk berbagai merk ONT/ONU (ZTE, Huawei, Fiberhome, GM220-S, CIOT, dsb).
+Modifikasi **RF Media GenieACS Multi-Tab**, fork komunitas untuk operasional GenieACS TR-069 ACS Server yang dikelola dan dikustomisasi oleh RF MEDIA. Tampilan dan fungsi **GenieACS TR-069 ACS Server** yang dirancang khusus untuk mempermudah operasional teknisi dan pengelola jaringan internet (**RT/RW Net / ISP Mandiri**). Mengubah tampilan standar GenieACS yang kosong/polos menjadi **Multi-Tab Informatif Lengkap**, mendukung tombol **"Add WAN"** langsung dari Web UI, pemantauan port fisik LAN, tabel Multi-SSID & sinyal RSSI klien WiFi, serta dilengkapi **script provision universal bebas fault (0 Faults)** untuk berbagai merk ONT/ONU (ZTE, Huawei, Fiberhome, GM220-S, CIOT, dsb).
 
 ---
 
@@ -256,7 +256,7 @@ Ikuti panduan interaktif di layar untuk mengisi Token Telegram, Chat ID, Nomor A
 │   ├── package.json              # Dependensi @whiskeysockets/baileys@7.0.0-rc11, pino, qrcode
 │   ├── waLidStore.mjs            # Penyimpanan pemetaan LID Multi-Device WhatsApp
 │   └── whatsapp-bot.mjs          # Socket engine Baileys, auto-reconnect, QR generator, gateway HTTP 7559
-├── genieacs_ui_mod.tar.gz        # Bundle frontend Multi-Tab ALIJAYA NET (app.js, css, logo, binary modifikasi)
+├── genieacs_ui_mod.tar.gz        # Bundle frontend Multi-Tab RF MEDIA (app.js, css, logo, binary modifikasi)
 ├── genieacs_template_ui.tar.gz   # Arsip template UI (~17 KB) tanpa data perangkat
 └── genieacs_db.tar.gz            # Backup database template (~21 KB) siap pakai tanpa data ONT asing
 ```
