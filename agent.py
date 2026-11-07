@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # ==============================================================================
-# ALIJAYA NET - GenieACS AI Telegram Agent (Full Multi-Tab & Operations Mod)
-# Pengembang: ALIJAYA NET (WhatsApp: 081947215703)
+# RF MEDIA - GenieACS AI Telegram Agent (Full Multi-Tab & Operations Mod)
+# Kustomisasi dan pemeliharaan: RF MEDIA
 # ==============================================================================
 
 import os
@@ -160,15 +160,15 @@ def get_config():
         _RESOLVED_MONGO_URI = None
         return {}
 
-BRAND_NAME = "ALIJAYA NET"
-BRAND_PHONE = "081947215703"
+BRAND_NAME = "RF MEDIA"
+BRAND_PHONE = ""
 
 def update_branding(cfgs):
     global BRAND_NAME, BRAND_PHONE
     b_name = cfgs.get("agent.brand.name", "").strip()
     b_phone = cfgs.get("agent.brand.phone", "").strip()
-    BRAND_NAME = b_name if b_name else "ALIJAYA NET"
-    BRAND_PHONE = b_phone if b_phone else "081947215703"
+    BRAND_NAME = b_name if b_name else "RF MEDIA"
+    BRAND_PHONE = b_phone if b_phone else ""
 
 def is_valid_token(val):
     if not val:
@@ -1880,7 +1880,7 @@ def ask_gemini_ai(gemini_key, model_name, user_prompt, sender_id="admin", is_adm
 
 
 # ==============================================================================
-# ALIJAYA NET - VOICE COMMAND & VOICE REPLY (STT via Gemini & TTS via gTTS)
+# RF MEDIA NET - VOICE COMMAND & VOICE REPLY (STT via Gemini & TTS via gTTS)
 # ==============================================================================
 
 VOICE_PERSISTENT_USERS = set()
@@ -2462,9 +2462,9 @@ def process_agent_command(user_text, sender_id="admin", is_admin=True, gemini_ke
             "━━━━━━━━━━━━━━━━━━━━\n"
             "Silakan gunakan salah satu format perintah berikut:\n\n"
             "• *Ubah Nama & Sandi:* `wifi <user> <nama_wifi_baru> <sandi_baru>`\n"
-            "  _Contoh:_ `wifi cucimotor Alijaya-Net 12345678`\n\n"
+            "  _Contoh:_ `wifi cucimotor RF-Media 12345678`\n\n"
             "• *Ubah Nama WiFi Saja:* `ssid <user> <nama_wifi_baru>`\n"
-            "  _Contoh:_ `ssid cucimotor Alijaya-Net`\n\n"
+            "  _Contoh:_ `ssid cucimotor RF-Media`\n\n"
             "• *Ubah Sandi WiFi Saja:* `pass <user> <sandi_baru>`\n"
             "  _Contoh:_ `pass cucimotor 12345678`"
         )
@@ -2844,7 +2844,7 @@ def process_agent_command(user_text, sender_id="admin", is_admin=True, gemini_ke
             return (f"❌ Gagal memperbarui WiFi: {msg}", None)
         else:
             if is_admin:
-                return ("⚠️ Format salah. Gunakan:\n`wifi <user> <nama_wifi_baru> <sandi_baru>`\n_Contoh:_ `wifi cucimotor Alijaya-Net 12345678`", None)
+                return ("⚠️ Format salah. Gunakan:\n`wifi <user> <nama_wifi_baru> <sandi_baru>`\n_Contoh:_ `wifi cucimotor RF-Media 12345678`", None)
             else:
                 return ("⚠️ Format salah. Gunakan:\n`wifi <nama_wifi_baru> <sandi_baru>`\n_Contoh:_ `wifi WiFi-Saya SandiRahasia123`", None)
 
@@ -3171,10 +3171,10 @@ def handle_incoming_message(token, chat_id, user_text, gemini_key, model_name, i
             "Silakan gunakan salah satu format perintah berikut:\n\n"
             "1️⃣ *Ubah Nama & Sandi WiFi Sekaligus:*\n"
             "`wifi <user_pppoe> <nama_wifi_baru> <sandi_baru>`\n"
-            "_Contoh:_ `wifi cucimotor Alijaya-Net 12345678`\n\n"
+            "_Contoh:_ `wifi cucimotor RF-Media 12345678`\n\n"
             "2️⃣ *Ubah Nama WiFi (SSID) Saja:*\n"
             "`ssid <user_pppoe> <nama_wifi_baru>`\n"
-            "_Contoh:_ `ssid cucimotor Alijaya-Net`\n\n"
+            "_Contoh:_ `ssid cucimotor RF-Media`\n\n"
             "3️⃣ *Ubah Sandi WiFi Saja (min. 8 Karakter):*\n"
             "`pass <user_pppoe> <sandi_baru>`\n"
             "_Contoh:_ `pass cucimotor 12345678`\n\n"
@@ -3357,7 +3357,7 @@ HTML_CONFIG_PAGE = """<!DOCTYPE html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pengaturan Bot AI & WhatsApp - ALIJAYA NET</title>
+  <title>Pengaturan Bot AI & WhatsApp - RF MEDIA NET</title>
   <style>
     :root {
       --bg: #050833;
@@ -3525,7 +3525,7 @@ HTML_CONFIG_PAGE = """<!DOCTYPE html>
 
         <div class="form-group">
           <label>Nomor WhatsApp Admin / Teknisi:</label>
-          <textarea id="wa_admin_numbers" name="wa_admin_numbers" placeholder="Contoh: 081947215703, 081234567890"></textarea>
+          <textarea id="wa_admin_numbers" name="wa_admin_numbers" placeholder="Contoh: , 081234567890"></textarea>
           <div class="hint">Nomor yang memiliki hak akses perintah administratif (cek, redaman, reboot, wifion/off, ssid, dll). Pisahkan koma jika lebih dari satu.</div>
         </div>
 
@@ -3589,13 +3589,13 @@ HTML_CONFIG_PAGE = """<!DOCTYPE html>
       <div id="tab-brand" class="tab-pane">
         <div class="form-group">
           <label>Nama Brand / ISP / RT-RW Net:</label>
-          <input type="text" id="brand_name" name="brand_name" placeholder="ALIJAYA NET">
+          <input type="text" id="brand_name" name="brand_name" placeholder="RF MEDIA NET">
           <div class="hint">Nama usaha yang akan tampil pada header pesan Telegram & WhatsApp.</div>
         </div>
 
         <div class="form-group">
           <label>Nomor Telepon / WhatsApp Customer Service:</label>
-          <input type="text" id="brand_phone" name="brand_phone" placeholder="081947215703">
+          <input type="text" id="brand_phone" name="brand_phone" placeholder="">
           <div class="hint">Nomor kontak layanan bantuan pada footer pesan.</div>
         </div>
 
@@ -3612,7 +3612,7 @@ HTML_CONFIG_PAGE = """<!DOCTYPE html>
           <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
             <div>
               <span id="updateBadge" class="badge badge-open">MEMERIKSA VERSI...</span>
-              <p style="color: var(--text-muted); font-size: 0.84rem; margin-top: 4px;">Repositori: <b style="color: #00e5ff;">github.com/alijayanet/genieacs-multitab-mod</b></p>
+              <p style="color: var(--text-muted); font-size: 0.84rem; margin-top: 4px;">Repositori: <b style="color: #00e5ff;">github.com/RandyNetwork/rf-media-genieacs-multitab</b></p>
             </div>
             <button type="button" id="btnCheckUpdate" class="btn-test" style="flex: 0 0 auto; padding: 8px 16px; border-radius: 6px;" onclick="checkSystemUpdate()">🔍 Cek Pembaruan</button>
           </div>
@@ -3991,7 +3991,7 @@ HTML_CONFIG_PAGE = """<!DOCTYPE html>
       this.disabled = true;
 
       const targetId = adminId.split(',')[0].trim();
-      const testMsg = '🔔 *TES NOTIFIKASI GENIEACS BOT*' + String.fromCharCode(10) + String.fromCharCode(10) + 'Koneksi bot Telegram ALIJAYA NET berhasil terhubung dengan server!';
+      const testMsg = '🔔 *TES NOTIFIKASI GENIEACS BOT*' + String.fromCharCode(10) + String.fromCharCode(10) + 'Koneksi bot Telegram RF MEDIA NET berhasil terhubung dengan server!';
       const tgUrl = 'https://api.telegram.org/bot' + token + '/sendMessage?chat_id=' + targetId + '&text=' + encodeURIComponent(testMsg) + '&parse_mode=Markdown';
 
       fetch(tgUrl)
@@ -4151,7 +4151,7 @@ HTML_LOGIN_PAGE = """<!DOCTYPE html>
         📶 Masuk ke Portal Mandiri WiFi Pelanggan &rarr;
       </a>
     </div>
-    <div class="footer">ALIJAYA NET TR-069 Management</div>
+    <div class="footer">RF MEDIA NET TR-069 Management</div>
   </div>
 
   <script>
@@ -4327,7 +4327,7 @@ def get_system_update_status():
     if not repo_dir:
         target_dir = "/root/genieacs-multitab-mod"
         try:
-            subprocess.run(["git", "clone", "https://github.com/alijayanet/genieacs-multitab-mod.git", target_dir], timeout=35, check=True)
+            subprocess.run(["git", "clone", "https://github.com/RandyNetwork/rf-media-genieacs-multitab.git", target_dir], timeout=35, check=True)
             repo_dir = target_dir
         except Exception as e:
             return {"success": False, "error": f"Gagal inisialisasi repositori Git: {e}"}
@@ -4353,7 +4353,7 @@ def get_system_update_status():
         commits_behind = int(behind_str) if behind_str.isdigit() else 0
     except Exception:
         try:
-            ls_out = subprocess.check_output(["git", "ls-remote", "https://github.com/alijayanet/genieacs-multitab-mod.git", "refs/heads/main"], timeout=10).decode().strip()
+            ls_out = subprocess.check_output(["git", "ls-remote", "https://github.com/RandyNetwork/rf-media-genieacs-multitab.git", "refs/heads/main"], timeout=10).decode().strip()
             remote_hash = ls_out.split()[0] if ls_out else ""
             remote_short = remote_hash[:7]
         except Exception as e2:
@@ -4399,7 +4399,7 @@ def apply_system_update():
     try:
         log("🔄 [1/5] Mengambil pembaruan terbaru dari GitHub...")
         if not os.path.exists(os.path.join(repo_dir, ".git")):
-            cmd = subprocess.run(["git", "clone", "https://github.com/alijayanet/genieacs-multitab-mod.git", repo_dir], capture_output=True, text=True, timeout=40)
+            cmd = subprocess.run(["git", "clone", "https://github.com/RandyNetwork/rf-media-genieacs-multitab.git", repo_dir], capture_output=True, text=True, timeout=40)
             if cmd.stdout.strip(): log(cmd.stdout.strip())
             if cmd.stderr.strip(): log(cmd.stderr.strip())
         else:
@@ -4514,7 +4514,7 @@ def apply_system_update():
 
 
 # ==============================================================================
-# FITUR GEOLOCATION / MAPPING ODP & KLIEN (ALIJAYA NET)
+# FITUR GEOLOCATION / MAPPING ODP & KLIEN (RF MEDIA NET)
 # ==============================================================================
 
 def get_geo_devices_data():
@@ -4610,13 +4610,13 @@ def get_geo_devices_data():
                 vp.get("WlanSSID", {}).get("_value") or
                 vp.get("SSID", {}).get("_value") or
                 wlan_cfg.get("SSID", {}).get("_value") or
-                (f"ALIJAYA-{pppoe}" if pppoe and pppoe != "-" else "ALIJAYA-NET")
+                (f"RF-MEDIA-{pppoe}" if pppoe and pppoe != "-" else "RF-MEDIA")
             )
             wifi_pass = (
                 vp.get("WlanPassword", {}).get("_value") or
                 wlan_cfg.get("KeyPassphrase", {}).get("_value") or
                 wlan_cfg.get("PreSharedKey", {}).get("1", {}).get("KeyPassphrase", {}).get("_value") or
-                "alijaya2026"
+                "-"
             )
 
             dev_info = {
@@ -5749,7 +5749,7 @@ def start_web_server(port=7558):
         logger.error(f"Gagal menjalankan Bot Web Config server di port {port}: {e}")
 
 def main():
-    logger.info("Starting ALIJAYA NET GenieACS AI Agent Service...")
+    logger.info("Starting RF MEDIA NET GenieACS AI Agent Service...")
     web_thread = threading.Thread(target=start_web_server, args=(7558,), daemon=True)
     web_thread.start()
     last_update_id = 0
