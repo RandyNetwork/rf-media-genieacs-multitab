@@ -173,7 +173,7 @@ Repositori ini kini dilengkapi modul **Dual Bot AI Agent (Telegram & WhatsApp Ba
    * Menampilkan header identitas pelanggan (**👤 PELANGGAN : CUCIMOTOR**), Status Online/Offline, Redaman RX Power (dBm) + Indikator Kualitas (Sangat Bagus 🟢 / Normal 🟡 / Kritis 🔴), Suhu, IP WAN, Uptime, WiFi SSID, Sandi, User Terkoneksi, Tipe Hardware, SN, dan MAC Address.
 3. **Audit Massal Redaman Kritis / Drop**:
    * Ketik: `redaman` atau `/redaman`
-   * Menampilkan rangkuman seluruh modem pelanggan yang redamannya buruk (< -26 dBm).
+* Ketik: `offline` atau `/offline` ➔ Daftar modem yang tidak mengirim Inform lebih dari 10 menit.\n   * Menampilkan rangkuman seluruh modem pelanggan yang redamannya buruk (< -26 dBm).
 4. **Deteksi Modem Baru Belum Disetting (Unconfigured ONT)**:
    * Ketik: `ontbaru` atau `/ontbaru`
    * Menampilkan daftar ONT baru dicolok yang belum memiliki akun PPPoE.
