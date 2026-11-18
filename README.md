@@ -1,4 +1,4 @@
-# 🚀 RF Media GenieACS Multi-Tab (Informatif, Universal Multi-Vendor & 0-Faults)
+# RF MEDIA GenieACS Multi-Tab
 
 [![GitHub Repository](https://img.shields.io/badge/GitHub-RandyNetwork%2Frf--media--genieacs--multitab-blue?logo=github)](https://github.com/RandyNetwork/rf-media-genieacs-multitab)
 [![GenieACS Version](https://img.shields.io/badge/GenieACS-v1.2.13%2B-orange?logo=node.js)](https://genieacs.com/)
@@ -6,18 +6,17 @@
 [![Database](https://img.shields.io/badge/Database-MongoDB%204.4%2B%20%7C%206.x%20%7C%207.x-brightgreen?logo=mongodb)](https://www.mongodb.com/)
 [![Platform](https://img.shields.io/badge/Platform-Armbian%20%7C%20Linux%20SBC%20%7C%20Ubuntu%20%7C%20Debian-yellow?logo=linux)](https://www.armbian.com/)
 [![Brand](https://img.shields.io/badge/Brand-RF%20MEDIA-bb002e)](https://github.com/RandyNetwork/rf-media-genieacs-multitab)
-[![License](https://img.shields.io/badge/License-MIT-purple)](#)
 
 ![RF Media — GenieACS Multi-Tab](brandingrf-media-header.png)
 
-Modifikasi **RF Media GenieACS Multi-Tab**, fork komunitas untuk operasional GenieACS TR-069 ACS Server yang dikelola dan dikustomisasi oleh RF MEDIA. Tampilan dan fungsi **GenieACS TR-069 ACS Server** yang dirancang khusus untuk mempermudah operasional teknisi dan pengelola jaringan internet (**RT/RW Net / ISP Mandiri**). Mengubah tampilan standar GenieACS yang kosong/polos menjadi **Multi-Tab Informatif Lengkap**, mendukung tombol **"Add WAN"** langsung dari Web UI, pemantauan port fisik LAN, tabel Multi-SSID & sinyal RSSI klien WiFi, serta dilengkapi **script provision universal bebas fault (0 Faults)** untuk berbagai merk ONT/ONU (ZTE, Huawei, Fiberhome, GM220-S, CIOT, dsb).
+Modifikasi **RF Media GenieACS Multi-Tab**, fork komunitas untuk operasional GenieACS TR-069 ACS Server yang dikelola dan dikustomisasi oleh RF MEDIA. Tampilan dan fungsi **GenieACS TR-069 ACS Server** yang dirancang khusus untuk mempermudah operasional teknisi dan pengelola jaringan internet (**RT/RW Net / ISP Mandiri**). Mengubah tampilan standar GenieACS yang kosong/polos menjadi **Multi-Tab Informatif Lengkap**, mendukung tombol **"Add WAN"** langsung dari Web UI, pemantauan port fisik LAN, tabel Multi-SSID & sinyal RSSI klien WiFi, serta dilengkapi **script provision multi-vendor dengan dukungan parameter sesuai model dan firmware** untuk berbagai merk ONT/ONU (ZTE, Huawei, Fiberhome, GM220-S, CIOT, dsb).
 
 ---
 
 ## 📞 Informasi Pengembang & Layanan Support
 
 Fork ini diberi identitas dan dipelihara oleh **RF MEDIA**. Kode dasar dan pengembangan upstream berasal dari **ALIJAYA NET**:
-* **Brand / Maintainer Fork** : **RF MEDIA**  
+* **Brand / Maintainer Fork** : **RF MEDIA**
 *Project upstream dan pengembang asli: ALIJAYA NET.*
 * **Repository RF MEDIA** : https://github.com/RandyNetwork/rf-media-genieacs-multitab
 * **Repository Resmi** : [https://github.com/alijayanet/genieacs-multitab-mod](https://github.com/alijayanet/genieacs-multitab-mod)
@@ -35,7 +34,7 @@ Fork ini diberi identitas dan dipelihara oleh **RF MEDIA**. Kode dasar dan penge
 | **Monitoring WiFi** | Terpencar dan sering tidak muncul | Tabel **Multi-SSID 1-4**, Channel, Sandi, & **Daftar Klien RSSI** |
 | **Monitoring LAN** | Tidak menampilkan port fisik & daftar HP | Tabel **LAN Port 1-4 (Speed/Duplex)** & **Daftar Klien Hosts (IP, MAC)** |
 | **Akses Web GUI Modem** | Harus ketik manual IP modem | **Direct Link Klik Langsung** via IP WAN atau IP Gateway |
-| **Kestabilan Sesi CWMP** | Sering timbul error `session_terminated` / rpc fault | **0 Faults**, provision bulletproof diuji pada puluhan multi-vendor |
+| **Kestabilan Sesi CWMP** | Sering timbul error `session_terminated` / rpc fault | **dukungan multi-vendor**, provision bulletproof diuji pada puluhan multi-vendor |
 
 ---
 
@@ -73,7 +72,7 @@ Fork ini diberi identitas dan dipelihara oleh **RF MEDIA**. Kode dasar dan penge
 * **Tabel Daftar Perangkat Klien (Hosts)**: Menampilkan semua HP, Laptop, Access Point, atau STB yang terhubung ke modem lengkap dengan HostName, Alamat IP, MAC Address, Interface Type (Ethernet/WiFi), Status Aktif, dan Sisa Waktu Lease DHCP.
 
 ### 5. 👤 Tab USER (Akses Web GUI Modem Jarak Jauh)
-* **Kredensial SuperAdmin Universal**: Menampilkan akun admin bawaan pabrik (seperti `telecomadmin` / `adminadmin`, dll).
+* **Kredensial akun admin perangkat (bergantung model dan firmware)**: Menampilkan akun admin bawaan pabrik (seperti `telecomadmin` / `adminadmin`, dll).
 * **Kredensial User Biasa**: Username & Password login pelanggan.
 * **Tautan Akses Cepat**: Tautan klik langsung ke halaman Web GUI modem via IP WAN maupun IP Gateway lokal.
 
@@ -89,8 +88,8 @@ Tersedia **2 Metode Instalasi** sesuai dengan kondisi server Anda:
 
 ---
 
-### METODE A: Fresh Install (Untuk Server / STB Armbian Baru dari Nol)
-Gunakan metode ini jika Anda baru saja menginstall sistem operasi Linux (Armbian/Debian/Ubuntu) dan ingin memasang GenieACS lengkap dengan template multi-tab secara otomatis:
+### METODE A: Fresh Install (Ubuntu)
+Gunakan pada server Ubuntu baru yang belum memiliki GenieACS. Node.js, npm, dan MongoDB harus sudah terpasang, serta MongoDB harus aktif. Installer tidak memasang MongoDB.
 
 1. **Pastikan Login Sebagai Root**:
    ```bash
@@ -110,7 +109,7 @@ Gunakan metode ini jika Anda baru saja menginstall sistem operasi Linux (Armbian
    bash install-genieacs-armbian.sh
    ```
 
-4. **Selesai**: Script akan menginstall Node.js v20, MongoDB, GenieACS, membuat systemd service, dan otomatis me-restore database siap pakai.
+4. **Selesai**: Script akan menginstall GenieACS, membuat systemd service, dan menerapkan konfigurasi RF MEDIA.
 
 ---
 
@@ -118,14 +117,14 @@ Gunakan metode ini jika Anda baru saja menginstall sistem operasi Linux (Armbian
 Gunakan metode ini jika server Anda **sudah memiliki GenieACS aktif dan sudah ada modem pelanggan yang terdaftar**.
 
 > [!IMPORTANT]
-> Script ini **HANYA** memperbarui tampilan tab, virtual parameter, dan script provision.  
-> Data modem pelanggan (`devices`) dan user login Anda **TIDAK AKAN TERHAPUS** (100% Aman).
+> Script ini memperbarui file UI serta konfigurasi config, presets, provisions, dan virtualParameters di MongoDB.
+> Data modem pelanggan (`devices`) dan user login Anda **TIDAK AKAN TERHAPUS**.
 
 1. **Unduh Paket Template & Script Penerap**:
    ```bash
    cd /root
    git clone https://github.com/RandyNetwork/rf-media-genieacs-multitab.git
-   cd genieacs-multitab-mod
+   cd rf-media-genieacs-multitab
    ```
 
 2. **Jalankan Script Penerap**:
@@ -134,13 +133,13 @@ Gunakan metode ini jika server Anda **sudah memiliki GenieACS aktif dan sudah ad
    bash apply-template.sh
    ```
 
-3. **Selesai**: Dalam hitungan detik seluruh tab informatif beserta **Dual Bot AI Agent (Telegram & WhatsApp)** akan langsung aktif! Silakan buka Web UI dan lakukan **Hard Refresh** (`Ctrl + F5`) di browser, lalu buka menu **🤖 Bot AI & WA** di navbar atas atau akses port `http://<IP-SERVER>:7558`.
+3. **Selesai**: Setelah proses selesai, periksa status GenieACS, restart layanan GenieACS UI sesuai kebutuhan, lalu buka Web UI dan lakukan Hard Refresh (`Ctrl + F5`).
 
 ---
 
 ## 🤖 Dual Bot AI GenieACS: Telegram & WhatsApp (Baileys Gateway)
 
-Repositori ini kini dilengkapi modul **Dual Bot AI Agent (Telegram & WhatsApp Baileys)** yang otomatis terpasang sebagai layanan sistem (`genieacs-agent.service` dan `genieacs-whatsapp.service`). Anda bisa mengontrol dan memantau seluruh modem pelanggan langsung dari chat Telegram maupun WhatsApp!
+Repositori ini juga menyediakan modul Dual Bot AI Agent (Telegram dan WhatsApp Baileys). Pemasangan serta konfigurasi layanan bot dilakukan secara terpisah. Anda bisa mengontrol dan memantau seluruh modem pelanggan langsung dari chat Telegram maupun WhatsApp!
 
 ### 📱 Fitur Utama Bot WhatsApp (Baileys Engine):
 1. **Pindai Kode QR Langsung dari Web Browser (Port 7558)**:
@@ -238,8 +237,8 @@ Ikuti panduan interaktif di layar untuk mengisi Token Telegram, Chat ID, Nomor A
 ## 🌐 Akses Web UI & Port Default
 
 * **Alamat Web UI** : `http://<IP-SERVER>:3000`
-* **Default Username** : `admin`
-* **Default Password** : `admin` *(dapat diubah di menu Admin -> Users)*
+* **Username Web UI** : Gunakan akun yang dibuat atau dikonfigurasi pada instalasi GenieACS.
+* **Password Web UI** : Gunakan password akun tersebut; tidak ada password universal yang dicantumkan.
 * **CWMP ACS URL** : `http://<IP-SERVER>:7547` (Gunakan URL ini pada settingan TR-069 di modem klien)
 
 ---
@@ -248,16 +247,14 @@ Ikuti panduan interaktif di layar untuk mengisi Token Telegram, Chat ID, Nomor A
 
 ```text
 ├── README.md                     # Dokumentasi resmi & panduan lengkap
-├── install-genieacs-armbian.sh   # Script auto-installer GenieACS + MongoDB + Agent untuk server baru
-├── apply-template.sh             # Script pengubah tema & multi-tab untuk server yang sudah aktif
+├── install-genieacs-armbian.sh   # Installer GenieACS 1.2.16 dan konfigurasi RF MEDIA (MongoDB harus tersedia)
+├── apply-template.sh             # Penerapan UI Multi-Tab dan konfigurasi RF MEDIA pada GenieACS aktif
 ├── agent.py                      # Skrip GenieACS Dual Bot Agent (Telegram, Web UI 7558, TR-069 Engine)
 ├── set-bot.py                    # Tool interaktif CLI (perintah 'set-bot') untuk setting bot tanpa ribet
 ├── whatsapp/                     # Modul WhatsApp Baileys Engine
 │   ├── package.json              # Dependensi @whiskeysockets/baileys@7.0.0-rc11, pino, qrcode
 │   ├── waLidStore.mjs            # Penyimpanan pemetaan LID Multi-Device WhatsApp
 │   └── whatsapp-bot.mjs          # Socket engine Baileys, auto-reconnect, QR generator, gateway HTTP 7559
-├── genieacs_ui_mod.tar.gz        # Bundle frontend Multi-Tab RF MEDIA (app.js, css, logo, binary modifikasi)
-├── genieacs_template_ui.tar.gz   # Arsip template UI (~17 KB) tanpa data perangkat
 └── genieacs_db.tar.gz            # Backup database template (~21 KB) siap pakai tanpa data ONT asing
 ```
 
@@ -266,7 +263,7 @@ Ikuti panduan interaktif di layar untuk mengisi Token Telegram, Chat ID, Nomor A
 ## 🤝 Dukungan & Kontribusi
 
 Jika Anda menemukan bug, memiliki saran parameter baru, atau membutuhkan bantuan instalasi dan integrasi jaringan:
-* **Maintainer fork** : **RF MEDIA**  
+* **Maintainer fork** : **RF MEDIA**
 *Pengembang asli project upstream: ALIJAYA NET.*
 * **Repository** : https://github.com/RandyNetwork/rf-media-genieacs-multitab
 * **Issues / Feedback** : Silakan buat tiket melalui tab [Issues di GitHub](https://github.com/RandyNetwork/rf-media-genieacs-multitab/issues).

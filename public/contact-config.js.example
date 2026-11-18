@@ -1,0 +1,2 @@
+// Salin file ini menjadi contact-config.js, lalu isi nomor WhatsApp admin.
+window.RF_MEDIA_CONTACT = { whatsapp: '' };

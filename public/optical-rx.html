@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Optical RX Monitoring - RF Media</title>
+<style>
+:root {
+  color-scheme: dark;
+  --bg:#0b1120; --panel:#111c30; --panel2:#16243a;
+  --border:#263750; --text:#e8eef8; --muted:#8da1bb;
+  --green:#22c55e; --yellow:#f59e0b; --red:#ef4444;
+  --blue:#38bdf8; --purple:#a78bfa;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+font:14px/1.5 Inter,system-ui,-apple-system,Segoe UI,sans-serif}
+.wrap{max-width:1600px;margin:auto;padding:24px}
+header{display:flex;justify-content:space-between;align-items:center;
+gap:16px;margin-bottom:24px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:13px}
+.logo{width:43px;height:43px;border-radius:12px;
+display:grid;place-items:center;background:#12344a;color:#67d4fa;
+font-weight:800;font-size:17px;border:1px solid #24516c}
+h1{font-size:22px;margin:0;font-weight:750;letter-spacing:-.4px}
+.sub{color:var(--muted);font-size:12px;margin-top:3px}
+.actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+button,select,input{font:inherit;color:var(--text)}
+button{background:#18304b;border:1px solid #31506f;padding:9px 14px;
+border-radius:9px;cursor:pointer}
+button:hover{background:#214363}
+button:disabled{opacity:.4;cursor:not-allowed}
+#updated{font-size:11px;color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(6,minmax(130px,1fr));
+gap:12px;margin-bottom:18px}
+.card,.panel{background:var(--panel);border:1px solid var(--border);
+border-radius:13px}
+.card{padding:16px;min-height:105px;position:relative;overflow:hidden}
+.card:after{content:"";position:absolute;width:65px;height:65px;
+right:-25px;top:-25px;border-radius:50%;background:var(--accent);
+opacity:.09}
+.card-label{font-size:12px;color:var(--muted)}
+.card-value{font-size:27px;font-weight:750;margin-top:8px;
+font-variant-numeric:tabular-nums}
+.card-note{font-size:11px;color:var(--muted);margin-top:2px}
+.green{--accent:var(--green)}.yellow{--accent:var(--yellow)}
+.red{--accent:var(--red)}.blue{--accent:var(--blue)}
+.purple{--accent:var(--purple)}.gray{--accent:#94a3b8}
+.green .card-value{color:var(--green)}
+.yellow .card-value{color:var(--yellow)}
+.red .card-value{color:var(--red)}
+.blue .card-value{color:var(--blue)}
+.purple .card-value{color:var(--purple)}
+.layout{display:grid;grid-template-columns:minmax(260px,.8fr) minmax(0,2fr);
+gap:14px;margin-bottom:18px}
+.panel{padding:18px;min-width:0}
+.panel-title{font-weight:700;font-size:14px;margin-bottom:5px}
+.panel-sub{font-size:11px;color:var(--muted);margin-bottom:18px}
+.bar-row{display:grid;grid-template-columns:95px 1fr 42px;gap:10px;
+align-items:center;margin:14px 0;font-size:12px}
+.bar-track{height:9px;background:#24334a;border-radius:20px;overflow:hidden}
+.bar-fill{height:100%;border-radius:20px;min-width:0}
+.bar-count{text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:17px;
+font-size:11px;color:var(--muted)}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;
+margin-right:5px}
+.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;
+margin:16px 0}
+input,select{background:#0c1729;border:1px solid var(--border);
+border-radius:9px;padding:10px 12px;outline:none}
+input{flex:1;min-width:220px}
+input:focus,select:focus{border-color:var(--blue)}
+.table-wrap{overflow-x:auto}
+/* RF MEDIA GENIEACS DEVICE TABLE */
+.table-wrap table{min-width:1750px}
+.table-wrap th,.table-wrap td{vertical-align:middle}
+.table-wrap th[data-sort]{cursor:pointer;user-select:none}
+.table-wrap th[data-sort]:hover{color:#67c9ff}
+.table-wrap td{max-width:240px;overflow:hidden;text-overflow:ellipsis}
+.table-wrap td.rx{font-weight:800;white-space:nowrap}
+
+table{width:100%;border-collapse:collapse;white-space:nowrap}
+th{text-align:left;font-size:11px;color:var(--muted);font-weight:600;
+padding:12px 11px;border-bottom:1px solid var(--border)}
+td{padding:12px 11px;border-bottom:1px solid #1d2b40;font-size:12px}
+tbody tr:hover{background:#16243a}
+.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+.pppoe{font-weight:650;color:#dce8f8}
+.device-link{color:#67c9ff;text-decoration:none;font-weight:650}
+.device-link:hover{color:#ffffff;text-decoration:underline}
+
+.rx{font-weight:800;font-variant-numeric:tabular-nums}
+.badge{display:inline-flex;padding:4px 8px;border-radius:20px;
+font-size:10px;font-weight:750;letter-spacing:.2px}
+.b-normal{background:#123b2b;color:#4ade80}
+.b-warning{background:#493416;color:#fbbf24}
+.b-critical{background:#481e29;color:#fb7185}
+.b-expired{background:#26344a;color:#cbd5e1}
+.b-unavailable{background:#34274b;color:#c4b5fd}
+.footer{display:flex;justify-content:space-between;align-items:center;
+gap:12px;padding-top:15px;flex-wrap:wrap;color:var(--muted);font-size:11px}
+.pager{display:flex;gap:7px;align-items:center}
+.empty{text-align:center;padding:35px;color:var(--muted)}
+.error{color:#fca5a5;background:#421e2a;padding:12px;border-radius:9px;
+margin:12px 0;display:none}
+@media(max-width:1100px){.cards{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:700px){
+ .wrap{padding:14px}.cards{grid-template-columns:repeat(2,1fr)}
+ .layout{grid-template-columns:1fr}h1{font-size:18px}
+ .card{min-height:90px;padding:13px}.card-value{font-size:23px}
+}
+
+/* RF MEDIA TYPOGRAPHY REFINEMENT */
+body { font-size: 13px; }
+.sub { font-size: 13px; }
+#updated { font-size: 12px; }
+.card-label { font-size: 13px; }
+.card-value { font-size: 29px; }
+.card-note { font-size: 12px; }
+.panel-title { font-size: 15px; }
+.panel-sub { font-size: 12px; }
+th { font-size: 12px; }
+td { font-size: 13px; }
+.badge { font-size: 11px; }
+
+
+/* SORTABLE TABLE HEADERS */
+th[data-sort] { cursor:pointer; user-select:none; }
+th[data-sort]:hover { color:#67c9ff; }
+th.sort-active { color:#67c9ff; }
+.sort-indicator { color:#67c9ff; font-size:11px; margin-left:4px; }
+
+
+/* RF MEDIA CLICKABLE SUMMARY CARDS */
+.card[data-filter] {
+ cursor: pointer;
+ transition: border-color .18s ease, transform .18s ease,
+             box-shadow .18s ease;
+}
+.card[data-filter]:hover {
+ transform: translateY(-2px);
+ border-color: #67c9ff;
+ box-shadow: 0 5px 18px rgba(0,0,0,.18);
+}
+.card[data-filter]:focus-visible {
+ outline: 2px solid #67c9ff;
+ outline-offset: 3px;
+}
+.card.filter-active {
+ border: 1px solid #67c9ff;
+ box-shadow: 0 0 0 1px rgba(103,201,255,.18);
+}
+
+
+/* RF MEDIA TYPOGRAPHY FINAL 80 ZOOM */
+body { font-size: 12px; }
+h1 { font-size: 20px; }
+.sub { font-size: 11px; }
+#updated { font-size: 10px; }
+.card-label { font-size: 12px; }
+.card-value { font-size: 26px; }
+.card-note { font-size: 11px; }
+.panel-title { font-size: 14px; }
+.panel-sub { font-size: 11px; }
+th { font-size: 11px; }
+td { font-size: 12px; }
+.badge { font-size: 10px; }
+.footer { font-size: 10px; }
+
+
+/* RF MEDIA TYPOGRAPHY COMPACT */
+body { font-size: 11px; }
+h1 { font-size: 18px; }
+.sub { font-size: 10px; }
+#updated { font-size: 9px; }
+.card-label { font-size: 11px; }
+.card-value { font-size: 23px; }
+.card-note { font-size: 10px; }
+.panel-title { font-size: 13px; }
+.panel-sub { font-size: 10px; }
+th { font-size: 10px; }
+td { font-size: 11px; }
+.badge { font-size: 9px; }
+.footer { font-size: 9px; }
+
+
+/* RF MEDIA FULL PAGE LAYOUT V1 */
+.wrap {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 14px 20px;
+}
+
+header {
+  margin-bottom: 16px;
+}
+
+.cards {
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.card {
+  min-height: 88px;
+  padding: 12px;
+}
+
+/* Distribusi dibuat ringkas dan horizontal */
+.layout {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.layout > .panel {
+  width: 100%;
+  padding: 12px 14px;
+}
+
+.layout > .panel:first-child .panel-sub {
+  margin-bottom: 7px;
+}
+
+.layout > .panel:first-child #bars {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.bar-row {
+  grid-template-columns: 65px minmax(0, 1fr) 38px;
+  gap: 7px;
+  margin: 5px 0;
+  font-size: 10px;
+}
+
+.bar-track {
+  height: 7px;
+}
+
+.legend {
+  display: none;
+}
+
+/* Tabel 14 kolom menggunakan seluruh lebar desktop */
+.layout > .panel:last-child {
+  padding: 14px;
+}
+
+.layout > .panel:last-child .panel-sub {
+  margin-bottom: 10px;
+}
+
+.table-wrap {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.table-wrap table {
+  width: 100%;
+  min-width: 0;
+  table-layout: fixed;
+  white-space: nowrap;
+}
+
+.table-wrap th,
+.table-wrap td {
+  padding: 8px 5px;
+  font-size: 9px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.table-wrap th {
+  font-size: 8.5px;
+  white-space: normal;
+  line-height: 1.25;
+}
+
+.table-wrap td {
+  max-width: none;
+}
+
+.table-wrap th:nth-child(1),
+.table-wrap td:nth-child(1) { width: 5%; }
+
+.table-wrap th:nth-child(2),
+.table-wrap td:nth-child(2) { width: 13%; }
+
+.table-wrap th:nth-child(3),
+.table-wrap td:nth-child(3) { width: 7%; }
+
+.table-wrap th:nth-child(4),
+.table-wrap td:nth-child(4) { width: 7%; }
+
+.table-wrap th:nth-child(5),
+.table-wrap td:nth-child(5) { width: 6%; }
+
+.table-wrap th:nth-child(6),
+.table-wrap td:nth-child(6) { width: 4%; }
+
+.table-wrap th:nth-child(7),
+.table-wrap td:nth-child(7) { width: 7%; }
+
+.table-wrap th:nth-child(8),
+.table-wrap td:nth-child(8) { width: 8%; }
+
+.table-wrap th:nth-child(9),
+.table-wrap td:nth-child(9) { width: 7%; }
+
+.table-wrap th:nth-child(10),
+.table-wrap td:nth-child(10) { width: 6%; }
+
+.table-wrap th:nth-child(11),
+.table-wrap td:nth-child(11) { width: 8%; }
+
+.table-wrap th:nth-child(12),
+.table-wrap td:nth-child(12) { width: 9%; }
+
+.table-wrap th:nth-child(13),
+.table-wrap td:nth-child(13) { width: 8%; }
+
+.table-wrap th:nth-child(14),
+.table-wrap td:nth-child(14) { width: 5%; }
+
+.table-wrap .badge {
+  padding: 3px 5px;
+  font-size: 8px;
+}
+
+.table-wrap .pppoe,
+.table-wrap .mono {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.toolbar {
+  margin: 10px 0;
+}
+
+.footer {
+  padding-top: 10px;
+}
+
+/* Tablet dan mobile */
+@media(max-width: 1100px) {
+  .wrap {
+    padding: 12px;
+  }
+
+  .layout > .panel:first-child #bars {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+  }
+
+  .table-wrap table {
+    min-width: 1250px;
+    table-layout: auto;
+  }
+}
+
+@media(max-width: 700px) {
+  .layout > .panel:first-child #bars {
+    grid-template-columns: 1fr;
+  }
+
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* RF MEDIA OPTICAL RX TABLE 12 COLUMNS V2 */
+.table-wrap table { table-layout: fixed; }
+.table-wrap th:nth-child(1), .table-wrap td:nth-child(1) { width:5%; }
+.table-wrap th:nth-child(2), .table-wrap td:nth-child(2) { width:14%; }
+.table-wrap th:nth-child(3), .table-wrap td:nth-child(3) { width:8%; }
+.table-wrap th:nth-child(4), .table-wrap td:nth-child(4) { width:8%; }
+.table-wrap th:nth-child(5), .table-wrap td:nth-child(5) { width:5%; }
+.table-wrap th:nth-child(6), .table-wrap td:nth-child(6) { width:8%; }
+.table-wrap th:nth-child(7), .table-wrap td:nth-child(7) { width:9%; }
+.table-wrap th:nth-child(8), .table-wrap td:nth-child(8) { width:8%; }
+.table-wrap th:nth-child(9), .table-wrap td:nth-child(9) { width:7%; }
+.table-wrap th:nth-child(10), .table-wrap td:nth-child(10) { width:9%; }
+.table-wrap th:nth-child(11), .table-wrap td:nth-child(11) { width:11%; }
+.table-wrap th:nth-child(12), .table-wrap td:nth-child(12) { width:8%; }
+
+RF MEDIA OPTICAL RX TABLE 12 COLUMNS V2
+</style>
+
+<style id="rfmedia-font-refinement-v2">
+/* RF MEDIA FONT REFINEMENT V2 */
+body { font-size: 11px !important; }
+h1 { font-size: 17px !important; }
+.sub { font-size: 10px !important; }
+#updated { font-size: 10px !important; }
+.card-label { font-size: 11px !important; }
+.card-value { font-size: 22px !important; }
+.card-note { font-size: 10px !important; }
+.panel-title { font-size: 13px !important; }
+.panel-sub { font-size: 10px !important; }
+th { font-size: 10px !important; }
+td { font-size: 11px !important; }
+.badge { font-size: 9px !important; }
+.footer { font-size: 10px !important; }
+</style>
+
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="brand">
+    <div class="logo">RF</div>
+    <div>
+      <h1>Optical RX Monitoring</h1>
+      <div class="sub">RF MEDIA · NETWORK OPERATIONS CENTER</div>
+    </div>
+  </div>
+  <div class="actions">
+    <span id="updated">Menunggu data...</span>
+    <select id="refreshInterval" aria-label="Interval auto refresh"
+      title="Interval Auto Refresh">
+      <option value="5" selected>5 menit</option>
+      <option value="10">10 menit</option>
+      <option value="15">15 menit</option>
+      <option value="30">30 menit</option>
+      <option value="60">60 menit</option>
+    </select>
+    <button id="refresh">↻ Refresh</button>
+  </div>
+</header>
+
+<div id="error" class="error"></div>
+
+<section class="cards">
+  <div class="card blue"><div class="card-label">TOTAL ONU</div>
+    <div class="card-value" id="total">—</div><div class="card-note">Terdaftar di GenieACS</div></div>
+  <div class="card green"><div class="card-label">NORMAL</div>
+    <div class="card-value" id="normal">—</div><div class="card-note">RX ≥ -24 dBm</div></div>
+  <div class="card yellow"><div class="card-label">WARNING</div>
+    <div class="card-value" id="warning">—</div><div class="card-note">-27 sampai &lt; -24 dBm</div></div>
+  <div class="card red"><div class="card-label">CRITICAL</div>
+    <div class="card-value" id="critical">—</div><div class="card-note">RX &lt; -27 dBm</div></div>
+  <div class="card gray"><div class="card-label">EXPIRED</div>
+    <div class="card-value" id="expired">—</div><div class="card-note">Data RX lebih dari 24 jam</div></div>
+  <div class="card purple"><div class="card-label">UNAVAILABLE</div>
+    <div class="card-value" id="unavailable">—</div><div class="card-note">Nilai RX tidak tersedia</div></div>
+</section>
+
+<section class="layout">
+  <div class="panel">
+    <div class="panel-title">Distribusi Optical RX</div>
+    <div class="panel-sub">Komposisi kondisi daya optik seluruh ONU</div>
+    <div id="bars"></div>
+    <div class="legend">
+      <span><i class="dot" style="background:var(--green)"></i>Normal</span>
+      <span><i class="dot" style="background:var(--yellow)"></i>Warning</span>
+      <span><i class="dot" style="background:var(--red)"></i>Critical</span>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-title">Daftar Perangkat ONU</div>
+    <div class="panel-sub">Monitoring nilai RX Power dan kondisi perangkat</div>
+    <div class="toolbar">
+      <input id="search" placeholder="Cari PPP Username, Serial Number, atau WiFi..." autocomplete="off">
+      <select id="status">
+        <option value="all">Semua Status</option>
+        <option value="critical">Critical</option>
+        <option value="warning">Warning</option>
+        <option value="normal">Normal</option>
+        <option value="expired">Expired</option>
+        <option value="unavailable">Unavailable</option>
+      </select>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th data-sort="status">STATUS</th>
+          <th data-sort="pppoe">PPP USERNAME</th>
+          <th data-sort="rx_dbm">RX POWER</th>
+          <th data-sort="wifi_ssid">WIFI</th>
+          <th data-sort="clients">KONEK</th>
+          <th data-sort="wan_ip">IP WAN</th>
+          <th data-sort="model">PRODUCT CLASS</th>
+          <th data-sort="ip_tr069">IP TR069</th>
+          <th data-sort="uptime">UPTIME</th>
+          <th data-sort="software_version">SOFTWARE VERSION</th>
+          <th data-sort="serial_number">SERIAL NUMBER</th>
+          <th data-sort="last_inform">LAST INFORM</th>
+        </tr></thead>
+        <tbody id="rows"><tr><td colspan="12" class="empty">Memuat data...</td></tr></tbody>
+      </table>
+    </div>
+    <div class="footer">
+      <span id="count">—</span>
+      <div class="pager">
+        <button id="prev">‹</button>
+        <span id="page">Halaman 1</span>
+        <button id="next">›</button>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<script>
+(function(){
+"use strict";
+const $ = id => document.getElementById(id);
+const prefix = location.pathname.startsWith("/bot-proxy") ? "/bot-proxy" : "";
+const state = {page:1, perPage:50, totalPages:1, search:"", status:"all", busy:false};
+const labels = {
+ normal:"NORMAL", warning:"WARNING", critical:"CRITICAL",
+ expired:"EXPIRED", unavailable:"UNAVAILABLE"
+};
+const colors = {
+ normal:"#22c55e", warning:"#f59e0b", critical:"#ef4444",
+ expired:"#94a3b8", unavailable:"#a78bfa"
+};
+function esc(v){
+ return String(v ?? "").replace(/[&<>"']/g,c=>({
+ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
+}
+function fmt(n){return Number(n||0).toLocaleString("id-ID")}
+function date(v){
+ if(!v)return "—";
+ const d=new Date(v);
+ return isNaN(d)?"—":d.toLocaleString("id-ID",{day:"2-digit",month:"short",
+ hour:"2-digit",minute:"2-digit"});
+}
+async function get(url){
+ const r=await fetch(prefix+url,{credentials:"same-origin",cache:"no-store"});
+ if(!r.ok)throw new Error("HTTP "+r.status);
+ return r.json();
+}
+function drawBars(data){
+ const keys=["normal","warning","critical","expired","unavailable"];
+ const total=Number(data.total_onu)||0;
+ $("bars").innerHTML=keys.map(k=>{
+  const n=Number(data[k])||0;
+  const width=total?Math.max(0,n/total*100):0;
+  return `<div class="bar-row"><span>${labels[k]}</span>
+  <div class="bar-track"><div class="bar-fill" style="width:${width}%;background:${colors[k]}"></div></div>
+  <span class="bar-count">${fmt(n)}</span></div>`;
+ }).join("");
+}
+async function loadSummary(){
+ const d=await get("/api/dashboard/rx-summary");
+ if(!d.success)throw new Error(d.error||"Gagal membaca ringkasan");
+ ["total_onu","normal","warning","critical","expired","unavailable"]
+ .forEach(k=>$(k==="total_onu"?"total":k).textContent=fmt(d[k]));
+ drawBars(d);
+}
+let sortKey=null, sortDir=1, lastDeviceData=null;
+
+function drawRows(d){
+ lastDeviceData=d;
+ const rows=[...(d.data||[])];
+
+ if(sortKey){
+  rows.sort((a,b)=>{
+   let av=a[sortKey], bv=b[sortKey];
+   if(sortKey==="rx_dbm"){
+    av=av===null||av===undefined?null:Number(av);
+    bv=bv===null||bv===undefined?null:Number(bv);
+    if(av===null)return bv===null?0:1;
+    if(bv===null)return -1;
+   }else if(sortKey==="last_inform"||sortKey==="rx_timestamp"){
+    av=av?new Date(av).getTime():0;
+    bv=bv?new Date(bv).getTime():0;
+   }else{
+    av=String(av??"").toLowerCase();
+    bv=String(bv??"").toLowerCase();
+   }
+   if(av<bv)return -1*sortDir;
+   if(av>bv)return 1*sortDir;
+   return 0;
+  });
+ }
+
+ if(!rows.length){
+  $("rows").innerHTML='<tr><td colspan="12" class="empty">Tidak ada perangkat yang cocok.</td></tr>';
+ }else{
+  $("rows").innerHTML=rows.map(x=>{
+   const s=x.status||"unavailable";
+   const rx=x.rx_dbm===null||x.rx_dbm===undefined
+     ?"—":Number(x.rx_dbm).toFixed(2)+" dBm";
+   const deviceUrl="/#!/devices/"+encodeURIComponent(x.device_id);
+   /* RF MEDIA CLICKABLE ONU FIELDS V1 */
+    /* RF MEDIA IP ACCESS NEW TAB V1 */
+    const ipLink=(v)=>{
+      const value=String(v??"").trim();
+      if(!value) return "—";
+      if(!/^[0-9a-fA-F:.]+$/.test(value)) return esc(value);
+      const host=value.includes(":") ? "["+value+"]" : value;
+      return `<a class="device-link" href="http://${host}" target="_blank" rel="noopener noreferrer">${esc(value)}</a>`;
+    };
+    const link=(v)=>`<a class="device-link" href="${deviceUrl}" target="_top">${esc(v||"—")}</a>`;
+   return `<tr>
+    <td><span class="badge b-${s}">${labels[s]||s}</span></td>
+    <td class="pppoe">${link(x.pppoe)}</td>
+    <td class="rx" style="color:${colors[s]||"#fff"}">${esc(rx)}</td>
+    <td>${link(x.wifi_ssid)}</td>
+    <td>${esc(x.clients)}</td>
+    <td class="mono">${ipLink(x.wan_ip)}</td>
+    <td>${link(x.model)}</td>
+    <td class="mono">${ipLink(x.ip_tr069)}</td>
+    <td>${esc(x.uptime)}</td>
+    <td>${esc(x.software_version)}</td>
+    <td class="mono">${esc(x.serial_number)}</td>
+    <td>${date(x.last_inform)}</td>
+   </tr>`;
+  }).join("");
+ }
+
+ state.totalPages=Math.max(1,Number(d.total_pages)||1);
+ $("count").textContent=`Menampilkan ${rows.length?((state.page-1)*state.perPage+1):0}–${Math.min(state.page*state.perPage,Number(d.total)||0)} dari ${fmt(d.total)} perangkat`;
+ $("page").textContent=`Halaman ${state.page} / ${state.totalPages}`;
+ $("prev").disabled=state.page<=1;
+ $("next").disabled=state.page>=state.totalPages;
+}
+
+async function loadDevices(){
+ const q=new URLSearchParams({
+ page:String(state.page),per_page:String(state.perPage),
+ status:state.status,search:state.search
+ });
+ const d=await get("/api/dashboard/rx-devices?"+q.toString());
+ if(!d.success)throw new Error(d.error||"Gagal membaca perangkat");
+ drawRows(d);
+}
+async function refresh(){
+ if(state.busy)return;
+ state.busy=true;
+ $("refresh").disabled=true;
+ $("error").style.display="none";
+ try{
+  await Promise.all([loadSummary(),loadDevices()]);
+  $("updated").textContent="Diperbarui "+new Date().toLocaleTimeString("id-ID");
+ }catch(e){
+  $("error").textContent="Gagal memuat data: "+e.message;
+  $("error").style.display="block";
+ }finally{
+  state.busy=false;$("refresh").disabled=false;
+ }
+}
+let searchTimer;
+$("search").addEventListener("input",e=>{
+ clearTimeout(searchTimer);
+ searchTimer=setTimeout(()=>{
+  state.search=e.target.value.trim();state.page=1;loadDevices().catch(showError);
+ },400);
+});
+$("status").addEventListener("change",e=>{
+ state.status=e.target.value;state.page=1;
+ updateSummaryCards();
+ loadDevices().catch(showError);
+});
+
+/* Klik kartu statistik untuk memfilter perangkat */
+const cardFilters = {
+ total:"all",
+ normal:"normal",
+ warning:"warning",
+ critical:"critical",
+ expired:"expired",
+ unavailable:"unavailable"
+};
+
+function updateSummaryCards(){
+ document.querySelectorAll(".card[data-filter]").forEach(card=>{
+  const active = card.dataset.filter === state.status;
+  card.classList.toggle("filter-active",active);
+  card.setAttribute("aria-pressed",active?"true":"false");
+ });
+}
+
+Object.entries(cardFilters).forEach(([id,status])=>{
+ const value=$(id);
+ const card=value && value.closest(".card");
+ if(!card)throw new Error("Kartu tidak ditemukan: "+id);
+
+ card.dataset.filter=status;
+ card.setAttribute("role","button");
+ card.setAttribute("tabindex","0");
+ card.setAttribute("aria-label","Filter "+id);
+
+ const activate=()=>{
+  $("status").value=status;
+  state.status=status;
+  state.page=1;
+  updateSummaryCards();
+  loadDevices().catch(showError);
+ };
+
+ card.addEventListener("click",activate);
+ card.addEventListener("keydown",e=>{
+  if(e.key==="Enter"||e.key===" "){
+   e.preventDefault();
+   activate();
+  }
+ });
+});
+
+updateSummaryCards();
+$("prev").addEventListener("click",()=>{
+ if(state.page>1){state.page--;loadDevices().catch(showError)}
+});
+$("next").addEventListener("click",()=>{
+ if(state.page<state.totalPages){state.page++;loadDevices().catch(showError)}
+});
+$("refresh").addEventListener("click",refresh);
+
+document.querySelectorAll("thead th[data-sort]").forEach(th=>{
+ th.addEventListener("click",()=>{
+  const key=th.dataset.sort;
+  if(sortKey===key)sortDir*=-1;
+  else {sortKey=key;sortDir=1;}
+
+  document.querySelectorAll("thead th[data-sort]").forEach(h=>{
+   h.classList.remove("sort-active");
+   const indicator=h.querySelector(".sort-indicator");
+   if(indicator)indicator.remove();
+  });
+
+  th.classList.add("sort-active");
+  const indicator=document.createElement("span");
+  indicator.className="sort-indicator";
+  indicator.textContent=sortDir===1?" ▲":" ▼";
+  th.appendChild(indicator);
+
+  if(lastDeviceData)drawRows(lastDeviceData);
+ });
+});
+function showError(e){
+ $("error").textContent="Gagal memuat data: "+e.message;
+ $("error").style.display="block";
+}
+refresh();
+
+let refreshTimer=null;
+function setRefreshInterval(){
+ if(refreshTimer)clearInterval(refreshTimer);
+ const minutes=Number($("refreshInterval").value)||5;
+ refreshTimer=setInterval(refresh,minutes*60*1000);
+}
+$("refreshInterval").addEventListener("change",()=>{
+ setRefreshInterval();
+});
+setRefreshInterval();
+})();
+</script>
+</body>
+</html>

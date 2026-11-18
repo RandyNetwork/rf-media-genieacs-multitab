@@ -4402,13 +4402,38 @@ def apply_system_update():
             cmd = subprocess.run(["git", "clone", "https://github.com/RandyNetwork/rf-media-genieacs-multitab.git", repo_dir], capture_output=True, text=True, timeout=40)
             if cmd.stdout.strip(): log(cmd.stdout.strip())
             if cmd.stderr.strip(): log(cmd.stderr.strip())
+            if cmd.returncode != 0:
+                raise RuntimeError("Git clone gagal; pembaruan dibatalkan.")
         else:
             cmd = subprocess.run(["git", "-C", repo_dir, "fetch", "origin", "main"], capture_output=True, text=True, timeout=25)
             if cmd.stdout.strip(): log(cmd.stdout.strip())
             if cmd.stderr.strip(): log(cmd.stderr.strip())
-            cmd = subprocess.run(["git", "-C", repo_dir, "reset", "--hard", "origin/main"], capture_output=True, text=True, timeout=10)
+            if cmd.returncode != 0:
+                raise RuntimeError("Git fetch gagal; pembaruan dibatalkan.")
+
+            cmd = subprocess.run(["git", "-C", repo_dir, "pull", "--ff-only", "origin", "main"], capture_output=True, text=True, timeout=30)
             if cmd.stdout.strip(): log(cmd.stdout.strip())
             if cmd.stderr.strip(): log(cmd.stderr.strip())
+            if cmd.returncode != 0:
+                raise RuntimeError("Git pull --ff-only gagal; pembaruan dibatalkan.")
+
+        # Validasi seluruh prasyarat sebelum menyalin file atau mengubah layanan.
+        required_files = [
+            os.path.join(repo_dir, "agent.py"),
+            os.path.join(repo_dir, "public", "app.js"),
+            os.path.join(repo_dir, "public", "chunk-CDG7S4P5.js"),
+        ]
+        missing = [f for f in required_files if not os.path.isfile(f)]
+        if missing:
+            raise RuntimeError("File wajib repository tidak ditemukan: " + ", ".join(missing))
+
+        genieacs_public_dirs = [
+            os.path.join(node_dir, "genieacs", "public")
+            for node_dir in ["/usr/lib/node_modules", "/usr/local/lib/node_modules"]
+        ]
+        genieacs_public_dirs = [d for d in genieacs_public_dirs if os.path.isdir(d)]
+        if not genieacs_public_dirs:
+            raise RuntimeError("Direktori public GenieACS tidak ditemukan; pembaruan dibatalkan.")
 
         log("📦 [2/5] Memperbarui script Agent (/opt/genieacs-agent/agent.py)...")
         src_agent = os.path.join(repo_dir, "agent.py")
@@ -4434,59 +4459,76 @@ def apply_system_update():
             os.chmod("/opt/genieacs-agent/whatsapp-bot.mjs", 0o755)
             log("  ✓ whatsapp-bot.mjs berhasil diperbarui.")
 
-        log("🎨 [3/5] Memeriksa & memperbarui antarmuka GenieACS & Peta ODP...")
-        tar_file = os.path.join(repo_dir, "genieacs_ui_mod.tar.gz")
+        log("🎨 [3/5] Memperbarui file UI RF MEDIA secara selektif...")
+        import shutil
+        from datetime import datetime
+
+        source_public = os.path.join(repo_dir, "public")
+        ui_files = [
+            "app.js",
+            "app.css",
+            "chunk-CDG7S4P5.js",
+            "donasi.html",
+            "mywifi.html",
+            "optical-rx.html",
+            "peta.html",
+            "voice.html",
+            "qris.jpg",
+        ]
+
+        stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+        backup_root = "/var/backups/rfmedia-ui-update/" + stamp
+        updated_any = False
+
         for node_dir in ["/usr/lib/node_modules", "/usr/local/lib/node_modules"]:
             genie_target = os.path.join(node_dir, "genieacs")
-            if os.path.exists(genie_target):
-                if os.path.exists(tar_file):
-                    tar_cmd = subprocess.run(["tar", "-zxf", tar_file, "-C", node_dir + "/"], capture_output=True, text=True, timeout=30)
-                    if tar_cmd.returncode == 0:
-                        log(f"  ✓ genieacs_ui_mod.tar.gz diekstrak ke {node_dir}/.")
-                        # Pulihkan branding RF MEDIA setelah paket UI menimpa aset public.
-                        branding_backup_dir = "/root/backup-rfmedia-branding"
-                        branding_files = [
-                            "logo.svg",
-                            "app.css",
-                            "rf-media-genieacs-logo.png",
-                            "rf-media-genieacs-logo-dark.png",
-                        ]
-                        branding_pub = os.path.join(genie_target, "public")
-                        if os.path.isdir(branding_pub) and os.path.isdir(branding_backup_dir):
-                            restored = 0
-                            for branding_file in branding_files:
-                                backup_file = os.path.join(branding_backup_dir, branding_file)
-                                if os.path.isfile(backup_file):
-                                    shutil.copy2(backup_file, os.path.join(branding_pub, branding_file))
-                                    restored += 1
-                            log(f"  ✓ Branding RF MEDIA dipulihkan: {restored}/{len(branding_files)} file.")
-                        else:
-                            log("  ⚠️ Backup branding RF MEDIA tidak ditemukan; logo bawaan paket tetap digunakan.")
-                    else:
-                        log(f"  ⚠️ Ekstraksi genieacs_ui_mod.tar.gz gagal ke {node_dir}: {tar_cmd.stderr.strip()}")
-                    bin_dir = os.path.join(genie_target, "bin")
-                    if os.path.exists(bin_dir):
-                        subprocess.run(["chmod", "+x"] + [os.path.join(bin_dir, f) for f in os.listdir(bin_dir)], check=False)
-                    subprocess.run(["chmod", "+x", "/usr/bin/genieacs-ui", "/usr/bin/genieacs-cwmp", "/usr/bin/genieacs-nbi", "/usr/bin/genieacs-fs"], check=False)
-                    subprocess.run(["chmod", "+x", "/usr/local/bin/genieacs-ui", "/usr/local/bin/genieacs-cwmp", "/usr/local/bin/genieacs-nbi", "/usr/local/bin/genieacs-fs"], check=False)
-                pub = os.path.join(genie_target, "public")
-                if os.path.exists(pub):
-                    peta_src = os.path.join(repo_dir, "public", "peta.html")
-                    app_src = os.path.join(repo_dir, "public", "app.js")
-                    if os.path.exists(peta_src):
-                        shutil.copy2(peta_src, os.path.join(pub, "peta.html"))
-                        log("  ✓ peta.html berhasil diperbarui.")
-                    if os.path.exists(app_src):
-                        shutil.copy2(app_src, os.path.join(pub, "app.js"))
-                        log("  ✓ app.js berhasil diperbarui.")
-                    voice_src = os.path.join(repo_dir, 'public', 'voice.html')
-                    if os.path.exists(voice_src):
-                        shutil.copy2(voice_src, os.path.join(pub, 'voice.html'))
-                        try:
-                            shutil.copy2(voice_src, '/opt/genieacs-agent/public/voice.html')
-                        except Exception:
-                            pass
-                        log('  ✓ voice.html (Voice AI Assistant) berhasil diperbarui.')
+            pub = os.path.join(genie_target, "public")
+
+            if not os.path.isdir(pub):
+                continue
+
+            os.makedirs(backup_root, mode=0o700, exist_ok=True)
+            backup_pub = os.path.join(backup_root, os.path.basename(node_dir), "public")
+            os.makedirs(backup_pub, mode=0o700, exist_ok=True)
+
+            copied = 0
+            for filename in ui_files:
+                src = os.path.join(source_public, filename)
+                dst = os.path.join(pub, filename)
+
+                if not os.path.isfile(src):
+                    log(f"  ⚠️ File sumber tidak ditemukan: public/{filename}")
+                    continue
+
+                if os.path.isfile(dst):
+                    shutil.copy2(dst, os.path.join(backup_pub, filename))
+
+                shutil.copy2(src, dst)
+                copied += 1
+
+            # Buat konfigurasi kontak awal hanya jika administrator belum memilikinya.
+            contact_dst = os.path.join(pub, "contact-config.js")
+            contact_example = os.path.join(source_public, "contact-config.js.example")
+            if not os.path.exists(contact_dst) and os.path.isfile(contact_example):
+                shutil.copy2(contact_example, contact_dst)
+                log("  ✓ contact-config.js dibuat dari template; nomor admin belum diisi.")
+
+            log(f"  ✓ {copied} file UI RF MEDIA dipasang di {pub}.")
+            updated_any = updated_any or copied > 0
+
+        # Voice AI juga tersedia di direktori publik Agent bila direktori tersebut ada.
+        voice_src = os.path.join(source_public, "voice.html")
+        agent_public = "/opt/genieacs-agent/public"
+        if os.path.isfile(voice_src) and os.path.isdir(agent_public):
+            voice_dst = os.path.join(agent_public, "voice.html")
+            if os.path.isfile(voice_dst):
+                os.makedirs(backup_root, mode=0o700, exist_ok=True)
+                shutil.copy2(voice_dst, os.path.join(backup_root, "agent-voice.html"))
+            shutil.copy2(voice_src, voice_dst)
+            log("  ✓ voice.html disalin ke direktori publik Agent.")
+
+        if not updated_any:
+            log("  ⚠️ Direktori public GenieACS tidak ditemukan atau tidak ada file UI yang diperbarui.")
 
         # Update VirtualParameters (VlanID, pppoeUsername) & cache di MongoDB
         try:
