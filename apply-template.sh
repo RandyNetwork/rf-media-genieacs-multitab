@@ -55,4 +55,5 @@ fi
 echo
 echo "[OK] File UI dan konfigurasi RF MEDIA telah diterapkan."
 echo "Backup UI: $BACKUP"
-echo "Restart GenieACS UI secara manual setelah pemeriksaan."
+echo "Validasi selesai. Silakan restart hanya service UI setelah memastikan perubahan."
+echo "Perintah: systemctl restart genieacs-ui"
