@@ -15,9 +15,9 @@ Modifikasi **RF Media GenieACS Multi-Tab**, fork komunitas untuk operasional Gen
 
 ## 📞 Informasi Pengembang & Layanan Support
 
-Fork ini diberi identitas dan dipelihara oleh **RF MEDIA**. Kode dasar dan pengembangan upstream berasal dari **ALIJAYA NET**:
+Fork ini diberi identitas dan dipelihara oleh **RF MEDIA**. Baseline upstream dan atribusi pengembang asli: **ALIJAYA NET** (dipertahankan sesuai lisensi):
 * **Brand / Maintainer Fork** : **RF MEDIA**
-*Project upstream dan pengembang asli: ALIJAYA NET.*
+*Pengembang asli upstream: ALIJAYA NET. Atribusi ini dipertahankan; branding dan pemeliharaan fork adalah RF MEDIA.*
 * **Repository RF MEDIA** : https://github.com/RandyNetwork/rf-media-genieacs-multitab
 * **Repository Resmi** : [https://github.com/alijayanet/genieacs-multitab-mod](https://github.com/alijayanet/genieacs-multitab-mod)
 * **Kebutuhan** : Tanya jawab teknis, panduan instalasi di STB Armbian (B860H, HG680P, dsb), integrasi billing, penyesuaian parameter khusus, dan konsultasi jaringan RT/RW Net.
@@ -264,7 +264,7 @@ Ikuti panduan interaktif di layar untuk mengisi Token Telegram, Chat ID, Nomor A
 
 Jika Anda menemukan bug, memiliki saran parameter baru, atau membutuhkan bantuan instalasi dan integrasi jaringan:
 * **Maintainer fork** : **RF MEDIA**
-*Pengembang asli project upstream: ALIJAYA NET.*
+*Pengembang asli upstream: ALIJAYA NET. Atribusi ini dipertahankan; branding dan pemeliharaan fork adalah RF MEDIA.*
 * **Repository** : https://github.com/RandyNetwork/rf-media-genieacs-multitab
 * **Issues / Feedback** : Silakan buat tiket melalui tab [Issues di GitHub](https://github.com/RandyNetwork/rf-media-genieacs-multitab/issues).
 
