@@ -117,7 +117,7 @@ Gunakan pada server Ubuntu baru yang belum memiliki GenieACS. Node.js, npm, dan 
 Gunakan metode ini jika server Anda **sudah memiliki GenieACS aktif dan sudah ada modem pelanggan yang terdaftar**.
 
 > [!IMPORTANT]
-> Script ini memperbarui file UI Multi-Tab dan menggabungkan dokumen config, presets, provisions, serta virtualParameters di MongoDB (upsert per _id).
+> Script ini memperbarui file UI Multi-Tab dan menggabungkan dokumen config, presets, provisions, serta virtualParameters di MongoDB (upsert per _id). Entri installer utama `install-genieacs-armbian.sh` menjalankan mode apply secara default.
 > Data modem pelanggan (`devices`), user, permissions, faults, dan tasks **TIDAK DIHAPUS**. Dokumen konfigurasi yang memiliki _id sama akan diperbarui; dokumen lain tetap ada. File UI yang diganti dicadangkan di `/var/backups/rf-media-genieacs-ui/`.
 
 1. **Unduh Paket Template & Script Penerap**:
