@@ -117,8 +117,8 @@ Gunakan pada server Ubuntu baru yang belum memiliki GenieACS. Node.js, npm, dan 
 Gunakan metode ini jika server Anda **sudah memiliki GenieACS aktif dan sudah ada modem pelanggan yang terdaftar**.
 
 > [!IMPORTANT]
-> Script ini memperbarui file UI serta konfigurasi config, presets, provisions, dan virtualParameters di MongoDB.
-> Data modem pelanggan (`devices`) dan user login Anda **TIDAK AKAN TERHAPUS**.
+> Script ini memperbarui file UI Multi-Tab dan menggabungkan dokumen config, presets, provisions, serta virtualParameters di MongoDB (upsert per _id).
+> Data modem pelanggan (`devices`), user, permissions, faults, dan tasks **TIDAK DIHAPUS**. Dokumen konfigurasi yang memiliki _id sama akan diperbarui; dokumen lain tetap ada. File UI yang diganti dicadangkan di `/var/backups/rf-media-genieacs-ui/`.
 
 1. **Unduh Paket Template & Script Penerap**:
    ```bash
