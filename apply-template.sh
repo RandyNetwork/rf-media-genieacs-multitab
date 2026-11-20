@@ -46,6 +46,12 @@ for f in app.js app.css chunk-CDG7S4P5.js donasi.html mywifi.html peta.html voic
   if [[ -s "$ROOT/public/$f" ]]; then install -m 0644 "$ROOT/public/$f" "$PUBLIC_DIR/$f"; fi
 done
 
+# Pastikan file pendukung UI RF MEDIA ter-backup dan tersedia.
+# contact-config.js lokal tidak ditimpa jika administrator telah mengisinya.
+if [[ -f "$ROOT/public/contact-config.js.example" && ! -f "$PUBLIC_DIR/contact-config.js" ]]; then
+  install -m 0644 "$ROOT/public/contact-config.js.example" "$PUBLIC_DIR/contact-config.js"
+fi
+
 echo
 echo "[OK] File UI dan konfigurasi RF MEDIA telah diterapkan."
 echo "Backup UI: $BACKUP"
