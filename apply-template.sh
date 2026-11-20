@@ -34,18 +34,16 @@ read -r -p "Lanjutkan penerapan RF MEDIA? Ketik YA: " confirm
 mkdir -p "$BACKUP"
 chmod 700 "$BACKUP"
 
-for f in app.js app.css chunk-CDG7S4P5.js; do
-  if [[ -f "$PUBLIC_DIR/$f" ]]; then
-    cp -a "$PUBLIC_DIR/$f" "$BACKUP/"
-  fi
+for f in app.js app.css chunk-CDG7S4P5.js donasi.html mywifi.html peta.html voice.html optical-rx.html qris.jpg; do
+  if [[ -f "$PUBLIC_DIR/$f" ]]; then cp -a "$PUBLIC_DIR/$f" "$BACKUP/"; fi
 done
 
 echo "[1/2] Menerapkan konfigurasi MongoDB..."
 python3 "$ROOT/scripts/merge_mongodb.py" --apply
 
 echo "[2/2] Memasang file UI RF MEDIA..."
-for f in app.js app.css chunk-CDG7S4P5.js; do
-  install -m 0644 "$ROOT/public/$f" "$PUBLIC_DIR/$f"
+for f in app.js app.css chunk-CDG7S4P5.js donasi.html mywifi.html peta.html voice.html optical-rx.html qris.jpg; do
+  if [[ -s "$ROOT/public/$f" ]]; then install -m 0644 "$ROOT/public/$f" "$PUBLIC_DIR/$f"; fi
 done
 
 echo
