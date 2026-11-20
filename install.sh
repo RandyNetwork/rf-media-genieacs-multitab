@@ -24,7 +24,7 @@ done
 
 export DEBIAN_FRONTEND=noninteractive
 apt-get update
-apt-get install -y ca-certificates curl wget gnupg python3 python3-venv python3-pip build-essential libssl1.1 || true
+apt-get install -y ca-certificates curl wget gnupg python3 python3-venv python3-pip build-essential openssl
 # Ubuntu 22.04 no longer ships libssl1.1; MongoDB 4.4 Ubuntu 20.04 binary needs it.
 if ! ldconfig -p | grep -q 'libssl.so.1.1'; then
   wget -q https://security.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.24_amd64.deb -O /tmp/libssl1.1.deb || die "Could not obtain libssl1.1 dependency"
