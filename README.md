@@ -127,10 +127,10 @@ Gunakan metode ini jika server Anda **sudah memiliki GenieACS aktif dan sudah ad
    cd rf-media-genieacs-multitab
    ```
 
-2. **Jalankan Script Penerap**:
+2. **Jalankan One-Click Installer (mode apply)**:
    ```bash
-   chmod +x apply-template.sh
-   bash apply-template.sh
+   chmod +x install-genieacs-armbian.sh
+   bash install-genieacs-armbian.sh
    ```
 
 3. **Selesai**: Setelah proses selesai, periksa status GenieACS, restart layanan GenieACS UI sesuai kebutuhan, lalu buka Web UI dan lakukan Hard Refresh (`Ctrl + F5`).
